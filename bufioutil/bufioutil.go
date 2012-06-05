@@ -3,6 +3,7 @@ package bufioutil
 
 import "bufio"
 import "io"
+import "os"
 
 // ReadLine returns a single line, not including the end-of-line bytes.
 func ReadLine(br *bufio.Reader) (line string, err error) {
@@ -20,7 +21,13 @@ func ReadLine(br *bufio.Reader) (line string, err error) {
 }
 
 // ReadLines returns all lines, not including the end-of-line bytes.
-func ReadLines(br *bufio.Reader) (lines []string, err error) {
+func ReadLines(filePath string) (lines []string, err error) {
+   fr, err := os.Open(filePath)
+   if err != nil {
+      return nil, err
+   }
+   defer fr.Close()
+   br := bufio.NewReader(fr)
    for {
       line, err := ReadLine(br)
       if err != nil {
