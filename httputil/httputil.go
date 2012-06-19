@@ -24,12 +24,7 @@ func SetClient(c *http.Client) {
 
 // Post issues a POST to the specified URL.
 func Post(rawUrl, bodyType, data string) (s string, err error) {
-   res, err := client.Post(rawUrl, bodyType, strings.NewReader(data))
-   if err != nil {
-      return "", err
-   }
-   defer res.Body.Close()
-   buf, err := ioutil.ReadAll(res.Body)
+   buf, err := PostRaw(rawUrl, bodyType, data)
    if err != nil {
       return "", err
    }
@@ -40,26 +35,35 @@ func Post(rawUrl, bodyType, data string) (s string, err error) {
 func PostRaw(rawUrl, bodyType, data string) (buf []byte, err error) {
    res, err := client.Post(rawUrl, bodyType, strings.NewReader(data))
    if err != nil {
-      return "", err
+      return nil, err
    }
    defer res.Body.Close()
    buf, err = ioutil.ReadAll(res.Body)
    if err != nil {
-      return "", err
+      return nil, err
    }
    return buf, nil
 }
 
 // Get issues a GET to the specified URL.
 func Get(rawUrl string) (s string, err error) {
-   res, err := client.Get(rawUrl)
-   if err != nil {
-      return "", err
-   }
-   defer res.Body.Close()
-   buf, err := ioutil.ReadAll(res.Body)
+   buf, err := GetRaw(rawUrl)
    if err != nil {
       return "", err
    }
    return string(buf), nil
+}
+
+// GetRaw issues a GET to the specified URL and returns the raw response.
+func GetRaw(rawUrl string) (buf []byte, err error) {
+   res, err := client.Get(rawUrl)
+   if err != nil {
+      return nil, err
+   }
+   defer res.Body.Close()
+   buf, err = ioutil.ReadAll(res.Body)
+   if err != nil {
+      return nil, err
+   }
+   return buf, nil
 }
