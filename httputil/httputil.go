@@ -36,6 +36,20 @@ func Post(rawUrl, bodyType, data string) (s string, err error) {
    return string(buf), nil
 }
 
+// PostRaw issues a POST to the specified URL and returns the raw response.
+func PostRaw(rawUrl, bodyType, data string) (buf []byte, err error) {
+   res, err := client.Post(rawUrl, bodyType, strings.NewReader(data))
+   if err != nil {
+      return "", err
+   }
+   defer res.Body.Close()
+   buf, err = ioutil.ReadAll(res.Body)
+   if err != nil {
+      return "", err
+   }
+   return buf, nil
+}
+
 // Get issues a GET to the specified URL.
 func Get(rawUrl string) (s string, err error) {
    res, err := client.Get(rawUrl)
