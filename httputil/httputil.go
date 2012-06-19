@@ -5,10 +5,18 @@ import "io/ioutil"
 import "net/http"
 import "strings"
 
-// client is the default client used by httputil requests.
+// client is the default http client used by httputil requests.
 var client = http.DefaultClient
 
-// SetClient sets the default client used by httputil requests.
+// Insecure is a http client which allows https connections with invalid
+// certificates.
+var Insecure = &http.Client{
+   Transport: &http.Transport{
+      TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+   },
+}
+
+// SetClient sets the default http client used by httputil requests.
 func SetClient(c *http.Client) {
    client = c
 }
