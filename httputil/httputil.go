@@ -9,9 +9,9 @@ import "strings"
 // client is the default http client used by httputil requests.
 var client = http.DefaultClient
 
-// Insecure is a http client which allows https connections with invalid
+// InsecureClient is a http client which allows https connections with invalid
 // certificates.
-var Insecure = &http.Client{
+var InsecureClient = &http.Client{
    Transport: &http.Transport{
       TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
    },
