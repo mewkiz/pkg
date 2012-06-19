@@ -1,6 +1,7 @@
 // Package httputil implements some http utility functions.
 package httputil
 
+import "crypto/tls"
 import "io/ioutil"
 import "net/http"
 import "strings"
