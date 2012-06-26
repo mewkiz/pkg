@@ -5,6 +5,8 @@ import "crypto/tls"
 import "io/ioutil"
 import "net/http"
 import "strings"
+import "bytes"
+import "exp/html"
 
 // client is the default http client used by httputil requests.
 var client = http.DefaultClient
@@ -66,4 +68,21 @@ func GetRaw(rawUrl string) (buf []byte, err error) {
       return nil, err
    }
    return buf, nil
+}
+
+// GetNode issues a GET request, parses it and returns a *html.Node.
+func GetNode(rawUrl string) (htmlNode *html.Node, err error) {
+
+   // Gets the content from the HTTP url
+   htmlBuf, err := GetRaw(rawUrl)
+   if err != nil {
+      return nil, err
+   }
+
+   // Make the content into a *html.Node
+   htmlNode, err = html.Parse(bytes.NewReader(htmlBuf))
+   if err != nil {
+      return nil, err
+   }
+   return htmlNode, nil
 }
