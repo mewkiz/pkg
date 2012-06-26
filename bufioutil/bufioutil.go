@@ -5,10 +5,21 @@ import "bufio"
 import "io"
 import "os"
 
+// Reader implements buffering for an io.Reader object.
+type Reader struct {
+	backend *bufio.Reader
+}
+
+// NewReader returns a new Reader.
+func NewReader(r io.Reader) (br Reader) {
+	br.backend = bufio.NewReader(r)
+	return br
+}
+
 // ReadLine returns a single line, not including the end-of-line bytes.
-func ReadLine(br *bufio.Reader) (line string, err error) {
+func (br Reader) ReadLine() (line string, err error) {
    for {
-      buf, isPrefix, err := br.ReadLine()
+      buf, isPrefix, err := br.backend.ReadLine()
       if err != nil {
          return "", err
       }
@@ -27,9 +38,9 @@ func ReadLines(filePath string) (lines []string, err error) {
       return nil, err
    }
    defer fr.Close()
-   br := bufio.NewReader(fr)
+   br := NewReader(fr)
    for {
-      line, err := ReadLine(br)
+      line, err := br.ReadLine()
       if err != nil {
          if err == io.EOF {
             break
