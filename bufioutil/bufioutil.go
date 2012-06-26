@@ -7,13 +7,13 @@ import "os"
 
 // Reader implements buffering for an io.Reader object.
 type Reader struct {
-	backend *bufio.Reader
+   backend *bufio.Reader
 }
 
 // NewReader returns a new Reader.
 func NewReader(r io.Reader) (br Reader) {
-	br.backend = bufio.NewReader(r)
-	return br
+   br.backend = bufio.NewReader(r)
+   return br
 }
 
 // ReadLine returns a single line, not including the end-of-line bytes.
