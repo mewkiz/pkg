@@ -12,3 +12,11 @@ func IndexAfter(s, sep string) int {
    }
    return pos + len(sep)
 }
+
+// Reverse returns a reversed version of s.
+func Reverse(s string) (rev string) {
+   for _, r := range s {
+      rev = string(r) + rev
+   }
+   return rev
+}
