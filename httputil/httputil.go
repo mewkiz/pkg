@@ -1,12 +1,12 @@
 // Package httputil implements some http utility functions.
 package httputil
 
+import "bytes"
 import "crypto/tls"
+import "exp/html"
 import "io/ioutil"
 import "net/http"
 import "strings"
-import "bytes"
-import "exp/html"
 
 // client is the default http client used by httputil requests.
 var client = http.DefaultClient
@@ -71,18 +71,14 @@ func GetRaw(rawUrl string) (buf []byte, err error) {
 }
 
 // GetNode issues a GET request, parses it and returns a *html.Node.
-func GetNode(rawUrl string) (htmlNode *html.Node, err error) {
-
-   // Gets the content from the HTTP url
-   htmlBuf, err := GetRaw(rawUrl)
+func GetNode(rawUrl string) (doc *html.Node, err error) {
+   buf, err := GetRaw(rawUrl)
    if err != nil {
       return nil, err
    }
-
-   // Make the content into a *html.Node
-   htmlNode, err = html.Parse(bytes.NewReader(htmlBuf))
+   doc, err = html.Parse(bytes.NewReader(buf))
    if err != nil {
       return nil, err
    }
-   return htmlNode, nil
+   return doc, nil
 }
