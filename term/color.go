@@ -1,6 +1,7 @@
 // Package term implements some terminal utility functions.
 package term
 
+import "runtime"
 import "strings"
 
 // Style codes.
@@ -40,6 +41,10 @@ const (
 
 // Color returns a colored text based on the specified style and color codes.
 func Color(text string, colors ...string) string {
+   // The windows terminal has no color support.
+   if runtime.GOOS == "windows" {
+      return text
+   }
    return esc(strings.Join(colors, ";")) + text + esc(Default)
 }
 
