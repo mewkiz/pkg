@@ -32,6 +32,20 @@ func (br Reader) ReadLine() (line string, err error) {
 }
 
 // ReadLines returns all lines, not including the end-of-line bytes.
+func (br Reader) ReadLines() (lines []string, err error) {
+	for {
+		line, err := br.ReadLine()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return nil, err
+		}
+		lines = append(lines, line)
+	}
+	return lines, nil
+}
+// ReadLines returns all lines, not including the end-of-line bytes.
 func ReadLines(filePath string) (lines []string, err error) {
 	fr, err := os.Open(filePath)
 	if err != nil {
