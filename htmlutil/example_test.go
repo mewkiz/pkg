@@ -14,13 +14,13 @@ func ExampleRender() {
 	// Output:
 	// <html>
 	//    <head>
-	//       <meta charset='utf-8'>
-	//       </meta>
+	//       <meta charset="utf-8">
 	//       <title>
 	//          0001
 	//       </title>
 	//    </head>
 	//    <body>
+	//       <img src="test.png" alt="test">
 	//       <p>
 	//          Test page.
 	//       </p>
