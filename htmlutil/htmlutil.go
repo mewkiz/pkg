@@ -60,7 +60,7 @@ func render(w io.Writer, n *html.Node, indent int) {
 		renderText(w, n.Data, indent)
 		fmt.Fprintf(w, " -->")
 	}
-	for _, c := range n.Child {
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		i := indent + 1
 		if n.Type == html.DocumentNode {
 			i = indent
