@@ -1,19 +1,21 @@
-// Package pngutil implements some png utility functions.
-package pngutil
+// Package imgutil implements some image utility functions.
+package imgutil
 
 import "image"
+import _ "image/gif"
+import _ "image/jpeg"
 import "image/png"
 import "os"
 
-// ReadFile reads a PNG file specified by imgPath and returns it as an
-// image.Image.
+// ReadFile reads an image file (gif, jpeg or png) specified by imgPath and
+// returns it as an image.Image.
 func ReadFile(imgPath string) (img image.Image, err error) {
 	fr, err := os.Open(imgPath)
 	if err != nil {
 		return nil, err
 	}
 	defer fr.Close()
-	img, err = png.Decode(fr)
+	img, _, err = image.Decode(fr)
 	if err != nil {
 		return nil, err
 	}
