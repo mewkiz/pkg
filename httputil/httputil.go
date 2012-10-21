@@ -70,7 +70,7 @@ func GetRaw(rawUrl string) (buf []byte, err error) {
 	return buf, nil
 }
 
-// GetDoc issues a GET request, parses it and returns a *html.Node.
+// GetDoc issues a GET request, parses it and returns an HTML node.
 func GetDoc(rawUrl string) (doc *html.Node, err error) {
 	buf, err := GetRaw(rawUrl)
 	if err != nil {

@@ -48,7 +48,7 @@ func render(w io.Writer, n *html.Node, indent int) {
 		fmt.Fprintf(w, strings.Repeat("   ", indent))
 		fmt.Fprintf(w, "<%s", n.Data)
 		for _, attr := range n.Attr {
-			fmt.Fprintf(w, " %s=%q", attr.Key, attr.Val)
+			fmt.Fprintf(w, ` %s="%s"`, attr.Key, html.EscapeString(attr.Val))
 		}
 		fmt.Fprintf(w, ">\n")
 	case html.TextNode:
@@ -58,9 +58,9 @@ func render(w io.Writer, n *html.Node, indent int) {
 			// skip empty comments.
 			break
 		}
-		fmt.Fprintf(w, "<!-- ")
+		fmt.Fprintf(w, "<!--\n")
 		renderText(w, n.Data, indent)
-		fmt.Fprintf(w, " -->\n")
+		fmt.Fprintf(w, "-->\n")
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		i := indent + 1
@@ -78,7 +78,7 @@ func render(w io.Writer, n *html.Node, indent int) {
 }
 
 func renderText(w io.Writer, data string, indent int) {
-	lines := strings.Split(data, "\n")
+	lines := strings.Split(html.EscapeString(data), "\n")
 	for _, line := range lines {
 		s := strings.TrimSpace(line)
 		if len(s) == 0 {
