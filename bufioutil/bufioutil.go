@@ -45,6 +45,7 @@ func (br Reader) ReadLines() (lines []string, err error) {
 	}
 	return lines, nil
 }
+
 // ReadLines returns all lines, not including the end-of-line bytes.
 func ReadLines(filePath string) (lines []string, err error) {
 	fr, err := os.Open(filePath)
