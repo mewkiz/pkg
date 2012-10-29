@@ -27,7 +27,7 @@ func SetClient(c *http.Client) {
 // PostString issues a POST to the specified URL and returns the response as a
 // string.
 func PostString(rawUrl, bodyType, data string) (s string, err error) {
-	buf, err := PostRaw(rawUrl, bodyType, data)
+	buf, err := Post(rawUrl, bodyType, data)
 	if err != nil {
 		return "", err
 	}
@@ -51,7 +51,7 @@ func Post(rawUrl, bodyType, data string) (buf []byte, err error) {
 // GetString issues a GET to the specified URL and returns the response as a
 // string.
 func GetString(rawUrl string) (s string, err error) {
-	buf, err := GetRaw(rawUrl)
+	buf, err := Get(rawUrl)
 	if err != nil {
 		return "", err
 	}
@@ -74,7 +74,7 @@ func Get(rawUrl string) (buf []byte, err error) {
 
 // GetDoc issues a GET request, parses it and returns an HTML node.
 func GetDoc(rawUrl string) (doc *html.Node, err error) {
-	buf, err := GetRaw(rawUrl)
+	buf, err := Get(rawUrl)
 	if err != nil {
 		return nil, err
 	}
