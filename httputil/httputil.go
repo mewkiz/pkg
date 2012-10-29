@@ -24,8 +24,9 @@ func SetClient(c *http.Client) {
 	client = c
 }
 
-// Post issues a POST to the specified URL.
-func Post(rawUrl, bodyType, data string) (s string, err error) {
+// PostString issues a POST to the specified URL and returns the response as a
+// string.
+func PostString(rawUrl, bodyType, data string) (s string, err error) {
 	buf, err := PostRaw(rawUrl, bodyType, data)
 	if err != nil {
 		return "", err
@@ -33,8 +34,8 @@ func Post(rawUrl, bodyType, data string) (s string, err error) {
 	return string(buf), nil
 }
 
-// PostRaw issues a POST to the specified URL and returns the raw response.
-func PostRaw(rawUrl, bodyType, data string) (buf []byte, err error) {
+// Post issues a POST to the specified URL.
+func Post(rawUrl, bodyType, data string) (buf []byte, err error) {
 	res, err := client.Post(rawUrl, bodyType, strings.NewReader(data))
 	if err != nil {
 		return nil, err
@@ -47,8 +48,9 @@ func PostRaw(rawUrl, bodyType, data string) (buf []byte, err error) {
 	return buf, nil
 }
 
-// Get issues a GET to the specified URL.
-func Get(rawUrl string) (s string, err error) {
+// GetString issues a GET to the specified URL and returns the response as a
+// string.
+func GetString(rawUrl string) (s string, err error) {
 	buf, err := GetRaw(rawUrl)
 	if err != nil {
 		return "", err
@@ -56,8 +58,8 @@ func Get(rawUrl string) (s string, err error) {
 	return string(buf), nil
 }
 
-// GetRaw issues a GET to the specified URL and returns the raw response.
-func GetRaw(rawUrl string) (buf []byte, err error) {
+// Get issues a GET to the specified URL and returns the raw response.
+func Get(rawUrl string) (buf []byte, err error) {
 	res, err := client.Get(rawUrl)
 	if err != nil {
 		return nil, err
