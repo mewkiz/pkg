@@ -1,7 +1,9 @@
+// Package readutil implements io.Reader utility functions.
 package readerutil
 
 import "io"
 
+// ReadByte reads and returns one byte from the provided io.Reader.
 func ReadByte(r io.Reader) (b byte, err error) {
 	buf := make([]byte, 1)
 	_, err = r.Read(buf)
