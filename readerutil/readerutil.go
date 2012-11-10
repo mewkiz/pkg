@@ -1,4 +1,4 @@
-// Package readutil implements io.Reader utility functions.
+// Package readerutil implements io.Reader utility functions.
 package readerutil
 
 import "io"
