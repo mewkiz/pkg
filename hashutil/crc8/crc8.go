@@ -39,8 +39,8 @@ func makeTable(poly uint8) (table *Table) {
 	for i := range table {
 		crc := uint8(i)
 		for j := 0; j < 8; j++ {
-			if crc & 0x80 != 0 {
-				crc = crc << 1 ^ poly
+			if crc&0x80 != 0 {
+				crc = crc<<1 ^ poly
 			} else {
 				crc <<= 1
 			}
@@ -83,7 +83,7 @@ func (d *digest) Reset() {
 // Update returns the result of adding the bytes in p to the crc.
 func Update(crc uint8, table *Table, p []byte) uint8 {
 	for _, v := range p {
-		crc = table[crc ^ v]
+		crc = table[crc^v]
 	}
 	return crc
 }
