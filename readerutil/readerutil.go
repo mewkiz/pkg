@@ -47,8 +47,9 @@ func NewPeeker(r io.ReadSeeker) Peeker {
 	return peeker{ReadSeeker: r}
 }
 
-// Peek returns the next n bytes without advancing the reader. If Peek returns
-// fewer than n bytes, it also returns io.ErrUnexpectedEOF.
+// Peek returns the next n bytes without advancing the reader. The error is EOF
+// only if no bytes were read. If an EOF happens after reading some but not all
+// the bytes, ReadFull returns ErrUnexpectedEOF.
 func (r peeker) Peek(n int) (buf []byte, err error) {
 	// Record original position.
 	orig, err := r.Seek(0, os.SEEK_CUR)
@@ -67,8 +68,8 @@ func (r peeker) Peek(n int) (buf []byte, err error) {
 	}
 
 	if e != nil && e != io.ErrUnexpectedEOF {
-		// Read error.
-		return nil, err
+		// Return read error.
+		return nil, e
 	}
 
 	if m < n {
