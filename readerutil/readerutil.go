@@ -1,11 +1,8 @@
 // Package readerutil implements io.Reader utility functions.
 package readerutil
 
-import "errors"
 import "io"
 import "os"
-
-var ErrBufferFull = errors.New("readerutil: buffer full")
 
 // NewByteReader returns a new io.ByteReader based on the provided io.Reader.
 func NewByteReader(r io.Reader) io.ByteReader {
@@ -51,8 +48,7 @@ func NewPeeker(r io.ReadSeeker) Peeker {
 }
 
 // Peek returns the next n bytes without advancing the reader. If Peek returns
-// fewer than n bytes, it also returns an error explaining why the read is
-// short. The error is ErrBufferFull if n is larger than buf's buffer size.
+// fewer than n bytes, it also returns io.ErrUnexpectedEOF.
 func (r peeker) Peek(n int) (buf []byte, err error) {
 	// Record original position.
 	orig, err := r.Seek(0, os.SEEK_CUR)
@@ -60,15 +56,9 @@ func (r peeker) Peek(n int) (buf []byte, err error) {
 		return nil, err
 	}
 
-	// Read content.
+	// Read content, but check error after position reset.
 	buf = make([]byte, n)
-	m, err := r.Read(buf)
-	if err != nil {
-		return nil, err
-	}
-	if m < n {
-		return buf, ErrBufferFull
-	}
+	m, e := io.ReadFull(r, buf)
 
 	// Reset original position.
 	_, err = r.Seek(orig, os.SEEK_SET)
@@ -76,7 +66,17 @@ func (r peeker) Peek(n int) (buf []byte, err error) {
 		return nil, err
 	}
 
-	return buf, nil
+	if e != nil && e != io.ErrUnexpectedEOF {
+		// Read error.
+		return nil, err
+	}
+
+	if m < n {
+		// Short read.
+		buf = buf[:m]
+	}
+
+	return buf, e
 }
 
 // Size returns the total size in bytes of the provided io.Seeker. The original
