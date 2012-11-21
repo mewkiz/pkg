@@ -261,10 +261,6 @@ func IsUTF16(r io.ReadSeeker, order binary.ByteOrder) (ok bool, err error) {
 		// Ignore the last rune if it is the first surrogate of a pair.
 		buf = buf[:len(buf)-1]
 	}
-	if len(buf) < 1 {
-		// At least one rune is required to determine the encoding.
-		return false, nil
-	}
 
 	// Decode the chunk as UTF-16.
 	var printableCount, total float64
@@ -278,6 +274,11 @@ func IsUTF16(r io.ReadSeeker, order binary.ByteOrder) (ok bool, err error) {
 			printableCount++
 		}
 		total++
+	}
+
+	if total < 1 {
+		// No valid UTF-8 runes located.
+		return false, nil
 	}
 
 	if printableCount/total >= 0.75 {
