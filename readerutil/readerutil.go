@@ -89,6 +89,13 @@ func (r peeker) Peek(n int) (buf []byte, err error) {
 }
 
 // A BinaryPeeker is an io.ReadSeeker that can also peek ahead.
+//
+// Peek reads structured binary data without advancing the reader. Data must be
+// a pointer to a fixed-size value or a slice of fixed-size values. Bytes read
+// from r are decoded using the receiver's byte order and written to successive
+// fields of the data. When reading into structs, the field data for fields with
+// blank (_) field names is skipped; i.e., blank field names may be used for
+// padding.
 type BinaryPeeker interface {
 	io.ReadSeeker
 	Peek(data interface{}) (err error)
@@ -102,13 +109,6 @@ type binaryPeeker struct {
 
 // NewBinaryPeeker returns a new BinaryPeeker based on the provided
 // io.ReadSeeker.
-//
-// Peek reads structured binary data without advancing the reader. Data must be
-// a pointer to a fixed-size value or a slice of fixed-size values. Bytes read
-// from r are decoded using the receiver's byte order and written to successive
-// fields of the data. When reading into structs, the field data for fields with
-// blank (_) field names is skipped; i.e., blank field names may be used for
-// padding.
 func NewBinaryPeeker(r io.ReadSeeker, order binary.ByteOrder) BinaryPeeker {
 	return binaryPeeker{ReadSeeker: r, order: order}
 }

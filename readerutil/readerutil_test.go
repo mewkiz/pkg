@@ -11,9 +11,12 @@ type testSize struct {
 
 func TestSize(t *testing.T) {
 	golden := []testSize{
-		{path: "testdata/utf16be.txt", want: 54},
-		{path: "testdata/utf16le.txt", want: 54},
-		{path: "testdata/utf8.txt", want: 31},
+		{path: "testdata/utf16be_crlf.txt", want: 62},
+		{path: "testdata/utf16be.txt", want: 56},
+		{path: "testdata/utf16le_crlf.txt", want: 62},
+		{path: "testdata/utf16le.txt", want: 56},
+		{path: "testdata/utf8_crlf.txt", want: 35},
+		{path: "testdata/utf8.txt", want: 32},
 	}
 	for _, g := range golden {
 		fr, err := os.Open(g.path)
@@ -42,8 +45,11 @@ type testIsUTF8 struct {
 
 func TestIsUTF8(t *testing.T) {
 	golden := []testIsUTF8{
+		{path: "testdata/utf16be_crlf.txt", want: false},
 		{path: "testdata/utf16be.txt", want: false},
+		{path: "testdata/utf16le_crlf.txt", want: false},
 		{path: "testdata/utf16le.txt", want: false},
+		{path: "testdata/utf8_crlf.txt", want: true},
 		{path: "testdata/utf8.txt", want: true},
 	}
 	for _, g := range golden {
@@ -74,10 +80,16 @@ type testIsUTF16 struct {
 
 func TestIsUTF16(t *testing.T) {
 	golden := []testIsUTF16{
+		{path: "testdata/utf16be_crlf.txt", order: binary.BigEndian, want: true},
+		{path: "testdata/utf16be_crlf.txt", order: binary.LittleEndian, want: false},
 		{path: "testdata/utf16be.txt", order: binary.BigEndian, want: true},
 		{path: "testdata/utf16be.txt", order: binary.LittleEndian, want: false},
+		{path: "testdata/utf16le_crlf.txt", order: binary.BigEndian, want: false},
+		{path: "testdata/utf16le_crlf.txt", order: binary.LittleEndian, want: true},
 		{path: "testdata/utf16le.txt", order: binary.BigEndian, want: false},
 		{path: "testdata/utf16le.txt", order: binary.LittleEndian, want: true},
+		{path: "testdata/utf8_crlf.txt", order: binary.BigEndian, want: false},
+		{path: "testdata/utf8_crlf.txt", order: binary.LittleEndian, want: false},
 		{path: "testdata/utf8.txt", order: binary.BigEndian, want: false},
 		{path: "testdata/utf8.txt", order: binary.LittleEndian, want: false},
 	}
