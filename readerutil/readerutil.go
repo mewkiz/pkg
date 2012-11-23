@@ -1,12 +1,16 @@
 // Package readerutil implements io.Reader utility functions.
 package readerutil
 
+import "bufio"
 import "encoding/binary"
+import "errors"
 import "io"
 import "os"
 import "unicode"
 import "unicode/utf16"
 import "unicode/utf8"
+
+var ErrUnknownEncoding = errors.New("readerutil.NewLineReader: unknown encoding.")
 
 // NewByteReader returns a new io.ByteReader based on the provided io.Reader.
 func NewByteReader(r io.Reader) io.ByteReader {
@@ -297,4 +301,134 @@ func isPrintable(r rune) bool {
 		return false
 	}
 	return unicode.IsGraphic(r) || unicode.IsSpace(r)
+}
+
+// LineReader implements the ReadLine method.
+//
+// ReadLine returns a single line, not including the end-of-line bytes. ReadLine
+// either returns a valid line (can be empty) or it returns an error, never
+// both.
+type LineReader interface {
+	ReadLine() (line string, err error)
+}
+
+// NewLineReader returns a LineReader that reads from r. If able to determine
+// the encoding it decodes each line to UTF-8.
+func NewLineReader(r io.ReadSeeker) (lr LineReader, err error) {
+	// UTF-8.
+	ok, err := IsUTF8(r)
+	if err != nil {
+		return nil, err
+	}
+	if ok {
+		lr = newLineReaderUTF8(r)
+		return lr, nil
+	}
+
+	// UTF-16 little endian.
+	ok, err = IsUTF16(r, binary.LittleEndian)
+	if err != nil {
+		return nil, err
+	}
+	if ok {
+		lr = newLineReaderUTF16(r, binary.LittleEndian)
+		return lr, nil
+	}
+
+	// UTF-16 big endian.
+	ok, err = IsUTF16(r, binary.BigEndian)
+	if err != nil {
+		return nil, err
+	}
+	if ok {
+		lr = newLineReaderUTF16(r, binary.BigEndian)
+		return lr, nil
+	}
+
+	return nil, ErrUnknownEncoding
+}
+
+// lineReaderUTF8 implements the LineReader interface for UTF-8 encoded data.
+type lineReaderUTF8 struct {
+	*bufio.Reader
+}
+
+// newLineReaderUTF8 returns a new LineReader for UTF-8 encoded data.
+func newLineReaderUTF8(r io.Reader) (lr *lineReaderUTF8) {
+	lr = &lineReaderUTF8{
+		Reader: bufio.NewReader(r),
+	}
+	return lr
+}
+
+// ReadLine returns a single line, not including the end-of-line bytes. ReadLine
+// either returns a valid line (can be empty) or it returns an error, never
+// both.
+func (lr *lineReaderUTF8) ReadLine() (line string, err error) {
+	// Read line.
+	line, err = lr.ReadString('\n')
+	if err != nil && len(line) == 0 {
+		// Only return io.EOF if no bytes have been read.
+		return "", err
+	}
+
+	// Drop the end-of-line bytes.
+	if len(line) > 0 && line[len(line)-1] == '\n' {
+		drop := 1
+		if len(line) > 1 && line[len(line)-2] == '\r' {
+			drop = 2
+		}
+		line = line[:len(line)-drop]
+	}
+
+	return line, nil
+}
+
+// lineReaderUTF16 implements the LineReader interface for UTF-16 encoded data.
+type lineReaderUTF16 struct {
+	io.Reader
+	order binary.ByteOrder
+}
+
+// newLineReaderUTF16 returns a new LineReader for UTF-16 encoded data with the
+// specified byte order.
+func newLineReaderUTF16(r io.Reader, order binary.ByteOrder) (lr *lineReaderUTF16) {
+	lr = &lineReaderUTF16{
+		Reader: r,
+		order:  order,
+	}
+	return lr
+}
+
+// ReadLine returns a single line, not including the end-of-line bytes. ReadLine
+// either returns a valid line (can be empty) or it returns an error, never
+// both.
+func (lr *lineReaderUTF16) ReadLine() (line string, err error) {
+	// Read line.
+	buf := make([]uint16, 0)
+	for {
+		var v uint16
+		err = binary.Read(lr, lr.order, &v)
+		if err != nil {
+			if len(buf) > 0 {
+				// Break at io.EOF if data has been read.
+				break
+			}
+			// Only return io.EOF if no bytes have been read.
+			return "", err
+		}
+		if v == '\n' {
+			// Break at newline.
+			break
+		}
+		buf = append(buf, v)
+	}
+	line = string(utf16.Decode(buf))
+
+	// Drop the end-of-line bytes.
+	if len(line) > 0 && line[len(line)-1] == '\r' {
+		line = line[:len(line)-1]
+	}
+
+	return line, nil
 }

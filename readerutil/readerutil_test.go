@@ -1,8 +1,11 @@
-package readerutil
+package readerutil_test
 
 import "encoding/binary"
+import "io"
 import "os"
 import "testing"
+
+import readerutil "."
 
 type testSize struct {
 	path string
@@ -21,12 +24,13 @@ func TestSize(t *testing.T) {
 	for _, g := range golden {
 		fr, err := os.Open(g.path)
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			continue
 		}
 		defer fr.Close()
 
 		// Verify file size.
-		got, err := Size(fr)
+		got, err := readerutil.Size(fr)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -55,12 +59,13 @@ func TestIsUTF8(t *testing.T) {
 	for _, g := range golden {
 		fr, err := os.Open(g.path)
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			continue
 		}
 		defer fr.Close()
 
 		// Verify file encoding.
-		got, err := IsUTF8(fr)
+		got, err := readerutil.IsUTF8(fr)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -96,12 +101,13 @@ func TestIsUTF16(t *testing.T) {
 	for _, g := range golden {
 		fr, err := os.Open(g.path)
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			continue
 		}
 		defer fr.Close()
 
 		// Verify file encoding.
-		got, err := IsUTF16(fr, g.order)
+		got, err := readerutil.IsUTF16(fr, g.order)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -109,6 +115,109 @@ func TestIsUTF16(t *testing.T) {
 		if got != g.want {
 			t.Errorf("%s: expected %t, got %t.", g.path, g.want, got)
 			continue
+		}
+	}
+}
+
+type testNewLineReader struct {
+	path  string
+	lines []string
+}
+
+func TestNewLineReader(t *testing.T) {
+	golden := []testNewLineReader{
+		{
+			path: "testdata/utf16be_crlf.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+		{
+			path: "testdata/utf16be.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+		{
+			path: "testdata/utf16le_crlf.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+		{
+			path: "testdata/utf16le.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+		{
+			path: "testdata/utf8_crlf.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+		{
+			path: "testdata/utf8.txt",
+			lines: []string{
+				"testing 123",
+				"",
+				"hello 世界",
+				"mewmew",
+			},
+		},
+	}
+	for _, g := range golden {
+		fr, err := os.Open(g.path)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		defer fr.Close()
+
+		// Verify lines.
+		lr, err := readerutil.NewLineReader(fr)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		lineNum := 0
+		for {
+			got, err := lr.ReadLine()
+			if err != nil {
+				if err != io.EOF {
+					t.Error(err)
+				}
+				// break on io.EOF
+				break
+			}
+			if lineNum >= len(g.lines) {
+				t.Errorf("lines slice out of bounds (%d >= %d).", lineNum, len(g.lines))
+				break
+			}
+			want := g.lines[lineNum]
+			lineNum++
+			if got != want {
+				t.Errorf("%s: expected %q, got %q.", g.path, want, got)
+				continue
+			}
+		}
+		if lineNum != len(g.lines) {
+			t.Errorf("tested %d out of %d lines.", lineNum, len(g.lines))
 		}
 	}
 }
