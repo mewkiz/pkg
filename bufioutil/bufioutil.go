@@ -18,15 +18,17 @@ func NewReader(r io.Reader) (br Reader) {
 
 // ReadLine returns a single line, not including the end-of-line bytes.
 func (br Reader) ReadLine() (line string, err error) {
-	for {
-		buf, isPrefix, err := br.backend.ReadLine()
-		if err != nil {
-			return "", err
+	line, err = br.backend.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+	// skip end-of-line bytes.
+	if line[len(line)-1] == '\n' {
+		drop := 1
+		if line[len(line)-2] == '\r' {
+			drop = 2
 		}
-		line += string(buf)
-		if !isPrefix {
-			break
-		}
+		line = line[:len(line)-drop]
 	}
 	return line, nil
 }
