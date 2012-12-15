@@ -23,9 +23,9 @@ func (br Reader) ReadLine() (line string, err error) {
 		return "", err
 	}
 	// skip end-of-line bytes.
-	if line[len(line)-1] == '\n' {
+	if len(line) > 0 && line[len(line)-1] == '\n' {
 		drop := 1
-		if line[len(line)-2] == '\r' {
+		if len(line) > 1 && line[len(line)-2] == '\r' {
 			drop = 2
 		}
 		line = line[:len(line)-drop]
