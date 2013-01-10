@@ -9,6 +9,7 @@ documentation
 
 Documentation provided by GoPkgDoc:
 
+   - [bit][]
    - [bufioutil][]
    - [bytesutil][]
    - [errorsutil][]
@@ -21,6 +22,7 @@ Documentation provided by GoPkgDoc:
    - [stringsutil][]
    - [term][]
 
+[bit]: http://godoc.org/github.com/mewkiz/pkg/bit
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [errorsutil]: http://godoc.org/github.com/mewkiz/pkg/errorsutil
