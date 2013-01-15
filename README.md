@@ -14,8 +14,8 @@ Documentation provided by GoPkgDoc:
    - [bytesutil][]
    - [errorsutil][]
    - [hashutil][]
-   - [hashutil/crc8][]
-   - [hashutil/crc16][]
+       - [crc8][]
+       - [crc16][]
    - [htmlutil][]
    - [httputil][]
    - [imgutil][]
@@ -29,8 +29,8 @@ Documentation provided by GoPkgDoc:
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [errorsutil]: http://godoc.org/github.com/mewkiz/pkg/errorsutil
 [hashutil]: http://godoc.org/github.com/mewkiz/pkg/hashutil
-[hashutil/crc8]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc8
-[hashutil/crc16]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc16
+[crc8]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc8
+[crc16]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc16
 [htmlutil]: http://godoc.org/github.com/mewkiz/pkg/htmlutil
 [httputil]: http://godoc.org/github.com/mewkiz/pkg/httputil
 [imgutil]: http://godoc.org/github.com/mewkiz/pkg/imgutil
