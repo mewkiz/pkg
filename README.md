@@ -7,7 +7,7 @@ features.
 documentation
 -------------
 
-Documentation provided by GoPkgDoc:
+Documentation provided by GoDoc:
 
    - [bit][]
    - [bufioutil][]
