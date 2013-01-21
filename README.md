@@ -12,6 +12,7 @@ Documentation provided by GoDoc:
    - [bit][]
    - [bufioutil][]
    - [bytesutil][]
+   - [dbg][]
    - [errorsutil][]
    - [hashutil][]
        - [crc8][]
@@ -27,6 +28,7 @@ Documentation provided by GoDoc:
 [bit]: http://godoc.org/github.com/mewkiz/pkg/bit
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
+[dbg]: http://godoc.org/github.com/mewkiz/pkg/dbg
 [errorsutil]: http://godoc.org/github.com/mewkiz/pkg/errorsutil
 [hashutil]: http://godoc.org/github.com/mewkiz/pkg/hashutil
 [crc8]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc8
