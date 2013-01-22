@@ -4,26 +4,26 @@ pkg
 This project provides packages for various utility functions and commonly used
 features.
 
-documentation
+Documentation
 -------------
 
 Documentation provided by GoDoc:
 
-   - [bit][]
-   - [bufioutil][]
-   - [bytesutil][]
-   - [dbg][]
-   - [errorsutil][]
-   - [hashutil][]
-       - [crc8][]
-       - [crc16][]
-   - [htmlutil][]
-   - [httputil][]
-   - [imgutil][]
-   - [proxy][]
-   - [readerutil][]
-   - [stringsutil][]
-   - [term][]
+- [bit][]
+- [bufioutil][]
+- [bytesutil][]
+- [dbg][]
+- [errorsutil][]
+- [hashutil][]
+	- [crc8][]
+	- [crc16][]
+- [htmlutil][]
+- [httputil][]
+- [imgutil][]
+- [proxy][]
+- [readerutil][]
+- [stringsutil][]
+- [term][]
 
 [bit]: http://godoc.org/github.com/mewkiz/pkg/bit
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
