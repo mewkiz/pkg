@@ -7,7 +7,7 @@ features.
 Documentation
 -------------
 
-Documentation provided by GoDoc:
+Documentation provided by GoDoc.
 
 - [bit][]
 - [bufioutil][]
