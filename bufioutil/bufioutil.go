@@ -19,7 +19,7 @@ func NewReader(r io.Reader) (br Reader) {
 // ReadLine returns a single line, not including the end-of-line bytes.
 func (br Reader) ReadLine() (line string, err error) {
 	line, err = br.backend.ReadString('\n')
-	if err != nil {
+	if err != nil && len(line) == 0 {
 		return "", err
 	}
 	// skip end-of-line bytes.
@@ -48,7 +48,8 @@ func (br Reader) ReadLines() (lines []string, err error) {
 	return lines, nil
 }
 
-// ReadLines returns all lines, not including the end-of-line bytes.
+// ReadLines opens the provided file and returns all lines, not including the
+// end-of-line bytes.
 func ReadLines(filePath string) (lines []string, err error) {
 	fr, err := os.Open(filePath)
 	if err != nil {
@@ -56,15 +57,5 @@ func ReadLines(filePath string) (lines []string, err error) {
 	}
 	defer fr.Close()
 	br := NewReader(fr)
-	for {
-		line, err := br.ReadLine()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			return nil, err
-		}
-		lines = append(lines, line)
-	}
-	return lines, nil
+	return br.ReadLines()
 }
