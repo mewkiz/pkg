@@ -4,13 +4,14 @@ package goutil
 import "os"
 import "path/filepath"
 
-// Work around to find the source directory when GOPATH contains a list of multiple paths.
-func SrcDir(repo string) (srcDir string, ok bool) {
+// SrcDir tries to locate dir in GOPATH and returns it's full path and true if
+// successful. GOPATH may contain a list of multiple paths.
+func SrcDir(dir string) (srcDir string, ok bool) {
 	for _, goPath := range filepath.SplitList(os.Getenv("GOPATH")) {
-		baseDir = goPath + srcDir
-		_, err := os.Stat(baseDir)
+		srcDir = goPath + dir
+		_, err := os.Stat(srcDir)
 		if err == nil {
-			return baseDir, ok
+			return srcDir, true
 		}
 	}
 	return "", false
