@@ -2,7 +2,7 @@
 package htmlutil
 
 import "bytes"
-import "exp/html"
+import "code.google.com/p/go.net/html"
 import "fmt"
 import "io"
 import "os"
