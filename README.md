@@ -14,6 +14,7 @@ Documentation provided by GoDoc.
 - [bytesutil][]
 - [dbg][]
 - [errorsutil][]
+- [goutil][]
 - [hashutil][]
 	- [crc8][]
 	- [crc16][]
@@ -30,6 +31,7 @@ Documentation provided by GoDoc.
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [dbg]: http://godoc.org/github.com/mewkiz/pkg/dbg
 [errorsutil]: http://godoc.org/github.com/mewkiz/pkg/errorsutil
+[goutil]: http://godoc.org/github.com/mewkiz/pkg/goutil
 [hashutil]: http://godoc.org/github.com/mewkiz/pkg/hashutil
 [crc8]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc8
 [crc16]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc16
