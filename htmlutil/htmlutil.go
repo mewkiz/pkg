@@ -2,11 +2,12 @@
 package htmlutil
 
 import "bytes"
-import "code.google.com/p/go.net/html"
 import "fmt"
 import "io"
 import "os"
 import "strings"
+
+import "code.google.com/p/go.net/html"
 
 // ParseFile parses the provided HTML file and returns an HTML node.
 func ParseFile(htmlPath string) (n *html.Node, err error) {
