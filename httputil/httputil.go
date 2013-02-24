@@ -3,10 +3,11 @@ package httputil
 
 import "bytes"
 import "crypto/tls"
-import "exp/html"
 import "io/ioutil"
 import "net/http"
 import "strings"
+
+import "code.google.com/p/go.net/html"
 
 // client is the default http client used by httputil requests.
 var client = http.DefaultClient
