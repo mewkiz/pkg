@@ -16,6 +16,17 @@ func NewReader(r io.Reader) (br Reader) {
 	return br
 }
 
+// Writer implements buffering for an io.Writer object.
+type Writer struct {
+	backend *bufio.Writer
+}
+
+// NewReader returns a new Writer.
+func NewWriter(r io.Writer) (br Writer) {
+	br.backend = bufio.NewWriter(r)
+	return br
+}
+
 // ReadLine returns a single line, not including the end-of-line bytes.
 func (br Reader) ReadLine() (line string, err error) {
 	line, err = br.backend.ReadString('\n')
@@ -31,6 +42,16 @@ func (br Reader) ReadLine() (line string, err error) {
 		line = line[:len(line)-drop]
 	}
 	return line, nil
+}
+
+// WriteLine writes a single line, including an newline character.
+func (bw Writer) WriteLine(str string) (i int, err error) {
+	i, err = bw.backend.WriteString(str + "\n")
+	if err != nil && i < len(str) {
+		return i, err
+	}
+	bw.backend.Flush()
+	return i, nil
 }
 
 // ReadLines returns all lines, not including the end-of-line bytes.
