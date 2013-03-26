@@ -43,6 +43,15 @@ func RenderToString(n *html.Node) string {
 	return string(w.Bytes())
 }
 
+func RenderClean(node *html.Node) (htmlStr string, err error) {
+	w := new(bytes.Buffer)
+	err = html.Render(w, node)
+	if err != nil {
+		return "", err
+	}
+	return string(w.Bytes()), nil
+}
+
 func render(w io.Writer, n *html.Node, indent int) {
 	switch n.Type {
 	case html.ElementNode:
