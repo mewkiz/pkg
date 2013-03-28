@@ -1,11 +1,9 @@
-package readerutil_test
+package readerutil
 
 import "encoding/binary"
 import "io"
 import "os"
 import "testing"
-
-import readerutil "."
 
 type testSize struct {
 	path string
@@ -30,7 +28,7 @@ func TestSize(t *testing.T) {
 		defer fr.Close()
 
 		// Verify file size.
-		got, err := readerutil.Size(fr)
+		got, err := Size(fr)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -65,7 +63,7 @@ func TestIsUTF8(t *testing.T) {
 		defer fr.Close()
 
 		// Verify file encoding.
-		got, err := readerutil.IsUTF8(fr)
+		got, err := IsUTF8(fr)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -107,7 +105,7 @@ func TestIsUTF16(t *testing.T) {
 		defer fr.Close()
 
 		// Verify file encoding.
-		got, err := readerutil.IsUTF16(fr, g.order)
+		got, err := IsUTF16(fr, g.order)
 		if err != nil {
 			t.Error(err)
 			continue
@@ -190,7 +188,7 @@ func TestNewLineReader(t *testing.T) {
 		defer fr.Close()
 
 		// Verify lines.
-		lr, err := readerutil.NewLineReader(fr)
+		lr, err := NewLineReader(fr)
 		if err != nil {
 			t.Error(err)
 			continue

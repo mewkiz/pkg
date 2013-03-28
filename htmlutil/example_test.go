@@ -3,7 +3,7 @@ package htmlutil_test
 import "log"
 import "os"
 
-import "github.com/mewkiz/pkg/htmlutil"
+import htmlutil "."
 
 func ExampleRender() {
 	n, err := htmlutil.ParseFile("testdata/0001.html")

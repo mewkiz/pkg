@@ -1,9 +1,7 @@
-package crc8_test
+package crc8
 
 import "io"
 import "testing"
-
-import "github.com/mewkiz/pkg/hashutil/crc8"
 
 type test struct {
 	want uint8
@@ -20,7 +18,7 @@ var golden = []test{
 
 func TestGolden(t *testing.T) {
 	for _, g := range golden {
-		h := crc8.NewATM()
+		h := NewATM()
 		io.WriteString(h, g.in)
 		got := h.Sum8()
 		if got != g.want {
@@ -35,7 +33,7 @@ func BenchmarkCrc8KB(b *testing.B) {
 	for i := range data {
 		data[i] = byte(i)
 	}
-	h := crc8.NewATM()
+	h := NewATM()
 	in := make([]byte, 0, h.Size())
 
 	b.ResetTimer()

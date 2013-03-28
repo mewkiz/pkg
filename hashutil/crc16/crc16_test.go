@@ -1,9 +1,7 @@
-package crc16_test
+package crc16
 
 import "io"
 import "testing"
-
-import crc16 "."
 
 type test struct {
 	want uint16
@@ -20,7 +18,7 @@ var golden = []test{
 
 func TestGolden(t *testing.T) {
 	for _, g := range golden {
-		h := crc16.NewIBM()
+		h := NewIBM()
 		io.WriteString(h, g.in)
 		got := h.Sum16()
 		if got != g.want {
@@ -35,7 +33,7 @@ func BenchmarkCrc16KB(b *testing.B) {
 	for i := range data {
 		data[i] = byte(i)
 	}
-	h := crc16.NewIBM()
+	h := NewIBM()
 	in := make([]byte, 0, h.Size())
 
 	b.ResetTimer()
