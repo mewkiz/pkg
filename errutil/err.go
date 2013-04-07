@@ -38,17 +38,19 @@ func (pos *position) String() string {
 	}
 	filePos := fmt.Sprintf("(%s:%d):", pos.file, pos.line)
 
-	if pos.callee == "" {
-		return filePos
-	}
-
-	// Use colors.
 	if UseColor {
+		// Use colors.
 		filePosColor := term.WhiteBold(filePos)
+		if pos.callee == "" {
+			return filePosColor
+		}
 		return fmt.Sprintf("%s %s", term.MagentaBold(pos.callee), filePosColor)
 	}
 
 	// No colors.
+	if pos.callee == "" {
+		return filePos
+	}
 	return fmt.Sprintf("%s %s", pos.callee, filePos)
 }
 
