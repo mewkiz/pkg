@@ -4,8 +4,8 @@ package stringsutil
 import "strings"
 import "unicode"
 
-// Index returns the index directly after the first instance of sep in s, or -1
-// if sep is not present in s.
+// IndexAfter returns the index directly after the first instance of sep in s,
+// or -1 if sep is not present in s.
 func IndexAfter(s, sep string) int {
 	pos := strings.Index(s, sep)
 	if pos == -1 {
