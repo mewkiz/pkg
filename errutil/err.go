@@ -60,6 +60,12 @@ func New(text string) (err error) {
 	return backendErr(errors.New(text))
 }
 
+// Newf returns a formatted error which contains position information from the
+// callee.
+func Newf(format string, a ...interface{}) (err error) {
+	return backendErr(fmt.Errorf(format, a...))
+}
+
 // NewNoPos returns an error which explicitly contains no position information.
 // Further calls to Err will not embed any position information.
 func NewNoPos(text string) (err error) {
