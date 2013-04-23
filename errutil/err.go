@@ -72,6 +72,12 @@ func NewNoPos(text string) (err error) {
 	return &errInfo{err: errors.New(text)}
 }
 
+// NewNoPosf returns a formatted error which explicitly contains no position information.
+// Further calls to Err will not embed any position information.
+func NewNoPosf(format string, a ...interface{}) (err error) {
+	return &errInfo{err: fmt.Errorf(format, a...)}
+}
+
 // ErrNoPos return an error which explicitly contains no position information.
 func ErrNoPos(e error) (err error) {
 	return &errInfo{err: e}
