@@ -1,3 +1,4 @@
+// Package errutil implements some error utility functions.
 package errutil
 
 import (
