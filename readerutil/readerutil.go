@@ -1,14 +1,16 @@
 // Package readerutil implements io.Reader utility functions.
 package readerutil
 
-import "bufio"
-import "encoding/binary"
-import "errors"
-import "io"
-import "os"
-import "unicode"
-import "unicode/utf16"
-import "unicode/utf8"
+import (
+	"bufio"
+	"encoding/binary"
+	"errors"
+	"io"
+	"os"
+	"unicode"
+	"unicode/utf16"
+	"unicode/utf8"
+)
 
 var ErrUnknownEncoding = errors.New("readerutil.NewLineReader: unknown encoding.")
 

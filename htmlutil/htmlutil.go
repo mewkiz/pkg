@@ -1,13 +1,15 @@
 // Package htmlutil implements some html utility functions.
 package htmlutil
 
-import "bytes"
-import "fmt"
-import "io"
-import "os"
-import "strings"
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"os"
+	"strings"
 
-import "code.google.com/p/go.net/html"
+	"code.google.com/p/go.net/html"
+)
 
 // ParseFile parses the provided HTML file and returns an HTML node.
 func ParseFile(htmlPath string) (n *html.Node, err error) {

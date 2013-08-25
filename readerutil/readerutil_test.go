@@ -1,9 +1,11 @@
 package readerutil
 
-import "encoding/binary"
-import "io"
-import "os"
-import "testing"
+import (
+	"encoding/binary"
+	"io"
+	"os"
+	"testing"
+)
 
 type testSize struct {
 	path string

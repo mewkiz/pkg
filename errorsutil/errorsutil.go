@@ -1,12 +1,14 @@
 // Package errorsutil implements some errors utility functions.
 package errorsutil
 
-import "errors"
-import "fmt"
-import "path"
-import "runtime"
+import (
+	"errors"
+	"fmt"
+	"path"
+	"runtime"
 
-import "github.com/mewkiz/pkg/term"
+	"github.com/mewkiz/pkg/term"
+)
 
 // New returns a new error string using the following format:
 //    pkg.func (file:line): error: text

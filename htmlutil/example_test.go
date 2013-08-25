@@ -1,9 +1,11 @@
 package htmlutil_test
 
-import "log"
-import "os"
+import (
+	"log"
+	"os"
 
-import htmlutil "."
+	"github.com/mewkiz/pkg/htmlutil"
+)
 
 func ExampleRender() {
 	n, err := htmlutil.ParseFile("testdata/0001.html")

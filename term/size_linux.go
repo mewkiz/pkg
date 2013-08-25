@@ -1,7 +1,9 @@
 package term
 
-import "syscall"
-import "unsafe"
+import (
+	"syscall"
+	"unsafe"
+)
 
 // winSize contains the dimentions of a terminal.
 type winSize struct {

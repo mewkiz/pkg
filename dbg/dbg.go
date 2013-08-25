@@ -2,7 +2,9 @@
 // runtime.
 package dbg
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // When Debug is true, output is enabled.
 var Debug = true

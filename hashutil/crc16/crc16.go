@@ -7,7 +7,9 @@
 // http://www.ross.net/crc/download/crc_v3.txt for information.
 package crc16
 
-import "github.com/mewkiz/pkg/hashutil"
+import (
+	"github.com/mewkiz/pkg/hashutil"
+)
 
 // The size of a CRC-16 checksum in bytes.
 const Size = 2

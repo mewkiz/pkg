@@ -1,9 +1,11 @@
 // Package goutil implements some golang relevant utility functions.
 package goutil
 
-import "fmt"
-import "os"
-import "path/filepath"
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+)
 
 // SrcDir tries to locate dir in GOPATH/src/ and returns it's full path and true
 // if successful. GOPATH may contain a list of multiple paths.

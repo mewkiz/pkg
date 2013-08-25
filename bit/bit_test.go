@@ -1,9 +1,11 @@
 package bit
 
-import "bytes"
-import "errors"
-import "io"
-import "testing"
+import (
+	"bytes"
+	"errors"
+	"io"
+	"testing"
+)
 
 type testNewStream struct {
 	buf  []byte

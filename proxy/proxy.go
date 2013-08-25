@@ -1,9 +1,11 @@
 // Package proxy provides proxy server utility functions.
 package proxy
 
-import "fmt"
-import "net/http"
-import "net/http/httputil"
+import (
+	"fmt"
+	"net/http"
+	"net/http/httputil"
+)
 
 // Listen initiates a reverse proxy on a given port. It handles incoming client
 // requests and sends them to their intended target server, proxying the

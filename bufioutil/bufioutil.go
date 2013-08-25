@@ -1,9 +1,11 @@
 // Package bufioutil implements some bufio utility functions.
 package bufioutil
 
-import "bufio"
-import "io"
-import "os"
+import (
+	"bufio"
+	"io"
+	"os"
+)
 
 // Reader implements buffering for an io.Reader object.
 type Reader struct {

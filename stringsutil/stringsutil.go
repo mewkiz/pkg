@@ -1,8 +1,10 @@
 // Package stringsutil implements some strings utility functions.
 package stringsutil
 
-import "strings"
-import "unicode"
+import (
+	"strings"
+	"unicode"
+)
 
 // IndexAfter returns the index directly after the first instance of sep in s,
 // or -1 if sep is not present in s.

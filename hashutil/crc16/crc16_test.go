@@ -1,7 +1,9 @@
 package crc16
 
-import "io"
-import "testing"
+import (
+	"io"
+	"testing"
+)
 
 type test struct {
 	want uint16

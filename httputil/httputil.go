@@ -1,13 +1,15 @@
 // Package httputil implements some http utility functions.
 package httputil
 
-import "bytes"
-import "crypto/tls"
-import "io/ioutil"
-import "net/http"
-import "strings"
+import (
+	"bytes"
+	"crypto/tls"
+	"io/ioutil"
+	"net/http"
+	"strings"
 
-import "code.google.com/p/go.net/html"
+	"code.google.com/p/go.net/html"
+)
 
 // client is the default http client used by httputil requests.
 var client = http.DefaultClient

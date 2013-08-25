@@ -1,7 +1,9 @@
 // Package bytesutil implements some bytes utility functions.
 package bytesutil
 
-import "bytes"
+import (
+	"bytes"
+)
 
 // IndexAfter returns the index directly after the first instance of sep in s,
 // or -1 if sep is not present in s.

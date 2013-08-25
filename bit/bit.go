@@ -1,9 +1,11 @@
 // Package bit implements convenient handling of bitstreams.
 package bit
 
-import "errors"
-import "fmt"
-import "io"
+import (
+	"errors"
+	"fmt"
+	"io"
+)
 
 // Stream is a sequence of bits, a bitstream.
 type Stream []int8

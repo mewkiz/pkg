@@ -1,8 +1,10 @@
 // Package term implements some terminal utility functions.
 package term
 
-import "runtime"
-import "strings"
+import (
+	"runtime"
+	"strings"
+)
 
 // Style codes.
 const (
