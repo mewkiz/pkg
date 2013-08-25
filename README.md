@@ -22,7 +22,6 @@ Documentation provided by GoDoc.
 	- [crc16][]
 - [htmlutil][]
 - [httputil][]
-- [human][]
 - [imgutil][]
 - [osutil][]
 - [pathutil][]
@@ -44,7 +43,6 @@ Documentation provided by GoDoc.
 [crc16]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc16
 [htmlutil]: http://godoc.org/github.com/mewkiz/pkg/htmlutil
 [httputil]: http://godoc.org/github.com/mewkiz/pkg/httputil
-[human]: http://godoc.org/github.com/mewkiz/pkg/human
 [imgutil]: http://godoc.org/github.com/mewkiz/pkg/imgutil
 [osutil]: http://godoc.org/github.com/mewkiz/pkg/osutil
 [pathutil]: http://godoc.org/github.com/mewkiz/pkg/pathutil
