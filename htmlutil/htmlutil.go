@@ -45,6 +45,8 @@ func RenderToString(n *html.Node) string {
 	return string(w.Bytes())
 }
 
+// RenderClean renders the provided HTML node and returns it as a string. It is
+// a convenience function for html.Render.
 func RenderClean(node *html.Node) (htmlStr string, err error) {
 	w := new(bytes.Buffer)
 	err = html.Render(w, node)
@@ -54,6 +56,10 @@ func RenderClean(node *html.Node) (htmlStr string, err error) {
 	return string(w.Bytes()), nil
 }
 
+// render renders a simplified version of the provided HTML node. It will strip
+// doctype nodes, trim spaces on text nodes and insert indentation.
+//
+// Note: render doesn't guarantee that the semantics of the page are preserved.
 func render(w io.Writer, n *html.Node, indent int) {
 	switch n.Type {
 	case html.ElementNode:

@@ -23,7 +23,7 @@ type Writer struct {
 	backend *bufio.Writer
 }
 
-// NewReader returns a new Writer.
+// NewWriter returns a new Writer.
 func NewWriter(r io.Writer) (br Writer) {
 	br.backend = bufio.NewWriter(r)
 	return br

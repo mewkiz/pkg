@@ -4,8 +4,8 @@ package imgutil
 import (
 	"image"
 	"image/color"
-	_ "image/gif"
-	_ "image/jpeg"
+	_ "image/gif"  // support for decoding gif images.
+	_ "image/jpeg" // support for decoding jpeg images.
 	"image/png"
 	"os"
 )

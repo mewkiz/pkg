@@ -12,7 +12,10 @@ import (
 	"unicode/utf8"
 )
 
-var ErrUnknownEncoding = errors.New("readerutil.NewLineReader: unknown encoding.")
+// Error values.
+var (
+	ErrUnknownEncoding = errors.New("readerutil.NewLineReader: unknown encoding.")
+)
 
 // NewByteReader returns a new io.ByteReader based on the provided io.Reader.
 func NewByteReader(r io.Reader) io.ByteReader {

@@ -1,4 +1,4 @@
-// Package httputil implements some os utility functions.
+// Package osutil implements some os utility functions.
 package osutil
 
 import (

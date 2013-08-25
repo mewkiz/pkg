@@ -28,8 +28,8 @@ func SetClient(c *http.Client) {
 }
 
 // Post issues a POST to the specified URL.
-func Post(rawUrl, bodyType, data string) (buf []byte, err error) {
-	resp, err := client.Post(rawUrl, bodyType, strings.NewReader(data))
+func Post(rawURL, bodyType, data string) (buf []byte, err error) {
+	resp, err := client.Post(rawURL, bodyType, strings.NewReader(data))
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +43,8 @@ func Post(rawUrl, bodyType, data string) (buf []byte, err error) {
 
 // PostString issues a POST to the specified URL and returns the response as a
 // string.
-func PostString(rawUrl, bodyType, data string) (s string, err error) {
-	buf, err := Post(rawUrl, bodyType, data)
+func PostString(rawURL, bodyType, data string) (s string, err error) {
+	buf, err := Post(rawURL, bodyType, data)
 	if err != nil {
 		return "", err
 	}
@@ -52,8 +52,8 @@ func PostString(rawUrl, bodyType, data string) (s string, err error) {
 }
 
 // Get issues a GET to the specified URL and returns the raw response.
-func Get(rawUrl string) (buf []byte, err error) {
-	resp, err := client.Get(rawUrl)
+func Get(rawURL string) (buf []byte, err error) {
+	resp, err := client.Get(rawURL)
 	if err != nil {
 		return nil, err
 	}
@@ -67,8 +67,8 @@ func Get(rawUrl string) (buf []byte, err error) {
 
 // GetString issues a GET to the specified URL and returns the response as a
 // string.
-func GetString(rawUrl string) (s string, err error) {
-	buf, err := Get(rawUrl)
+func GetString(rawURL string) (s string, err error) {
+	buf, err := Get(rawURL)
 	if err != nil {
 		return "", err
 	}
@@ -76,8 +76,8 @@ func GetString(rawUrl string) (s string, err error) {
 }
 
 // GetDoc issues a GET request, parses it and returns an HTML node.
-func GetDoc(rawUrl string) (doc *html.Node, err error) {
-	buf, err := Get(rawUrl)
+func GetDoc(rawURL string) (doc *html.Node, err error) {
+	buf, err := Get(rawURL)
 	if err != nil {
 		return nil, err
 	}
@@ -99,8 +99,8 @@ type Session struct {
 
 // Get issues a GET to the specified URL and returns the raw response. The
 // request uses the session's cookies and User-Agent.
-func (sess *Session) Get(rawUrl string) (buf []byte, err error) {
-	req, err := http.NewRequest("GET", rawUrl, nil)
+func (sess *Session) Get(rawURL string) (buf []byte, err error) {
+	req, err := http.NewRequest("GET", rawURL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (sess *Session) Get(rawUrl string) (buf []byte, err error) {
 
 // GetString issues a GET to the specified URL and returns the response as a
 // string. The request uses the session's cookies and User-Agent.
-func (sess *Session) GetString(rawUrl string) (s string, err error) {
-	buf, err := sess.Get(rawUrl)
+func (sess *Session) GetString(rawURL string) (s string, err error) {
+	buf, err := sess.Get(rawURL)
 	if err != nil {
 		return "", err
 	}
@@ -134,8 +134,8 @@ func (sess *Session) GetString(rawUrl string) (s string, err error) {
 
 // Post issues a POST to the specified URL. The request uses the session's
 // cookies and User-Agent.
-func (sess *Session) Post(rawUrl, bodyType, data string) (buf []byte, err error) {
-	req, err := http.NewRequest("POST", rawUrl, strings.NewReader(data))
+func (sess *Session) Post(rawURL, bodyType, data string) (buf []byte, err error) {
+	req, err := http.NewRequest("POST", rawURL, strings.NewReader(data))
 	if err != nil {
 		return nil, err
 	}
@@ -160,8 +160,8 @@ func (sess *Session) Post(rawUrl, bodyType, data string) (buf []byte, err error)
 
 // PostString issues a POST to the specified URL and returns the response as a
 // string. The request uses the session's cookies and User-Agent.
-func (sess *Session) PostString(rawUrl, bodyType, data string) (s string, err error) {
-	buf, err := sess.Post(rawUrl, bodyType, data)
+func (sess *Session) PostString(rawURL, bodyType, data string) (s string, err error) {
+	buf, err := sess.Post(rawURL, bodyType, data)
 	if err != nil {
 		return "", err
 	}
