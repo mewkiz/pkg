@@ -95,6 +95,7 @@ func (d *digest) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
+// Sum16 returns the 16-bit checksum of the hash.
 func (d *digest) Sum16() uint16 {
 	return d.crc
 }

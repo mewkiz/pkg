@@ -95,6 +95,7 @@ func (d *digest) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
+// Sum8 returns the 8-bit checksum of the hash.
 func (d *digest) Sum8() uint8 {
 	return d.crc
 }
