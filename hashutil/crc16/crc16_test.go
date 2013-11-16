@@ -51,7 +51,7 @@ func TestCrc16IBM(t *testing.T) {
 		io.WriteString(h, g.in)
 		got := h.Sum16()
 		if got != g.want {
-			t.Errorf("IBM(%q); expected 0x%02X, got 0x%02X.", g.in, g.want, got)
+			t.Errorf("IBM(%q); expected 0x%04X, got 0x%04X.", g.in, g.want, got)
 		}
 	}
 }
