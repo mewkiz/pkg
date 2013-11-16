@@ -1,8 +1,11 @@
 package hashutil_test
 
 import (
+	"bytes"
+	"hash"
 	"hash/crc32"
 	"hash/crc64"
+	"io"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -54,7 +57,7 @@ var golden = []test{
 	{0x33, 0xF560, 0x8E0BB443, 0xDB6EFFF26AA94946, "How can you write a big system without C++?  -Paul Glick"},
 }
 
-func TestHashReaderCRC8(t *testing.T) {
+func TestHashReaderCrc8(t *testing.T) {
 	for i, g := range golden {
 		hr := hashutil.NewHashReader(strings.NewReader(g.in), crc8.NewATM())
 		buf, err := ioutil.ReadAll(hr)
@@ -74,7 +77,7 @@ func TestHashReaderCRC8(t *testing.T) {
 	}
 }
 
-func TestHashReaderCRC16(t *testing.T) {
+func TestHashReaderCrc16(t *testing.T) {
 	for i, g := range golden {
 		hr := hashutil.NewHashReader(strings.NewReader(g.in), crc16.NewIBM())
 		buf, err := ioutil.ReadAll(hr)
@@ -94,7 +97,7 @@ func TestHashReaderCRC16(t *testing.T) {
 	}
 }
 
-func TestHashReaderCRC32(t *testing.T) {
+func TestHashReaderCrc32(t *testing.T) {
 	for i, g := range golden {
 		hr := hashutil.NewHashReader(strings.NewReader(g.in), crc32.NewIEEE())
 		buf, err := ioutil.ReadAll(hr)
@@ -114,10 +117,11 @@ func TestHashReaderCRC32(t *testing.T) {
 	}
 }
 
-func TestHashReaderCRC64(t *testing.T) {
-	table := crc64.MakeTable(crc64.ISO)
+var table64 = crc64.MakeTable(crc64.ISO)
+
+func TestHashReaderCrc64(t *testing.T) {
 	for i, g := range golden {
-		hr := hashutil.NewHashReader(strings.NewReader(g.in), crc64.New(table))
+		hr := hashutil.NewHashReader(strings.NewReader(g.in), crc64.New(table64))
 		buf, err := ioutil.ReadAll(hr)
 		if err != nil {
 			t.Errorf("i=%d: error during read; %v", i, err)
@@ -132,5 +136,122 @@ func TestHashReaderCRC64(t *testing.T) {
 		if got != g.crc64 {
 			t.Errorf("i=%d: crc64(%q); expected 0x%04X, want 0x%04X", i, g.in, got, g.crc64)
 		}
+	}
+}
+
+func BenchmarkHashReaderCrc8_1K(b *testing.B) {
+	h := crc8.NewATM()
+	benchmarkHashReader(b, h, 1024)
+}
+
+func BenchmarkHashReaderCrc8_2K(b *testing.B) {
+	h := crc8.NewATM()
+	benchmarkHashReader(b, h, 2*1024)
+}
+
+func BenchmarkHashReaderCrc8_4K(b *testing.B) {
+	h := crc8.NewATM()
+	benchmarkHashReader(b, h, 4*1024)
+}
+
+func BenchmarkHashReaderCrc8_8K(b *testing.B) {
+	h := crc8.NewATM()
+	benchmarkHashReader(b, h, 8*1024)
+}
+
+func BenchmarkHashReaderCrc8_16K(b *testing.B) {
+	h := crc8.NewATM()
+	benchmarkHashReader(b, h, 16*1024)
+}
+
+func BenchmarkHashReaderCrc16_1K(b *testing.B) {
+	h := crc16.NewIBM()
+	benchmarkHashReader(b, h, 1024)
+}
+
+func BenchmarkHashReaderCrc16_2K(b *testing.B) {
+	h := crc16.NewIBM()
+	benchmarkHashReader(b, h, 2*1024)
+}
+
+func BenchmarkHashReaderCrc16_4K(b *testing.B) {
+	h := crc16.NewIBM()
+	benchmarkHashReader(b, h, 4*1024)
+}
+
+func BenchmarkHashReaderCrc16_8K(b *testing.B) {
+	h := crc16.NewIBM()
+	benchmarkHashReader(b, h, 8*1024)
+}
+
+func BenchmarkHashReaderCrc16_16K(b *testing.B) {
+	h := crc16.NewIBM()
+	benchmarkHashReader(b, h, 16*1024)
+}
+
+func BenchmarkHashReaderCrc32_1K(b *testing.B) {
+	h := crc32.NewIEEE()
+	benchmarkHashReader(b, h, 1024)
+}
+
+func BenchmarkHashReaderCrc32_2K(b *testing.B) {
+	h := crc32.NewIEEE()
+	benchmarkHashReader(b, h, 2*1024)
+}
+
+func BenchmarkHashReaderCrc32_4K(b *testing.B) {
+	h := crc32.NewIEEE()
+	benchmarkHashReader(b, h, 4*1024)
+}
+
+func BenchmarkHashReaderCrc32_8K(b *testing.B) {
+	h := crc32.NewIEEE()
+	benchmarkHashReader(b, h, 8*1024)
+}
+
+func BenchmarkHashReaderCrc32_16K(b *testing.B) {
+	h := crc32.NewIEEE()
+	benchmarkHashReader(b, h, 16*1024)
+}
+
+func BenchmarkHashReaderCrc64_1K(b *testing.B) {
+	h := crc64.New(table64)
+	benchmarkHashReader(b, h, 1024)
+}
+
+func BenchmarkHashReaderCrc64_2K(b *testing.B) {
+	h := crc64.New(table64)
+	benchmarkHashReader(b, h, 2*1024)
+}
+
+func BenchmarkHashReaderCrc64_4K(b *testing.B) {
+	h := crc64.New(table64)
+	benchmarkHashReader(b, h, 4*1024)
+}
+
+func BenchmarkHashReaderCrc64_8K(b *testing.B) {
+	h := crc64.New(table64)
+	benchmarkHashReader(b, h, 8*1024)
+}
+
+func BenchmarkHashReaderCrc64_16K(b *testing.B) {
+	h := crc64.New(table64)
+	benchmarkHashReader(b, h, 16*1024)
+}
+
+func benchmarkHashReader(b *testing.B, h hash.Hash, count int64) {
+	b.SetBytes(count)
+	data := make([]byte, count)
+	for i := range data {
+		data[i] = byte(i)
+	}
+	in := make([]byte, 0, h.Size())
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		h.Reset()
+		hr := hashutil.NewHashReader(bytes.NewReader(data), h)
+		io.Copy(ioutil.Discard, hr)
+		h.Sum(in)
 	}
 }
