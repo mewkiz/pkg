@@ -9,7 +9,6 @@ Documentation
 
 Documentation provided by GoDoc.
 
-- [bit][]
 - [bufioutil][]
 - [bytesutil][]
 - [dbg][]
@@ -30,7 +29,6 @@ Documentation provided by GoDoc.
 - [stringsutil][]
 - [term][]
 
-[bit]: http://godoc.org/github.com/mewkiz/pkg/bit
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [dbg]: http://godoc.org/github.com/mewkiz/pkg/dbg
