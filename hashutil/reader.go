@@ -51,3 +51,15 @@ func (hr *hashReader) Sum8() uint8 {
 func (hr *hashReader) Sum16() uint16 {
 	return hr.Hash.(Hash16).Sum16()
 }
+
+// Sum32 returns the 32-bit checksum of the hash. It panics if hr.Hash doesn't
+// implement the interface hash.Hash32.
+func (hr *hashReader) Sum32() uint32 {
+	return hr.Hash.(hash.Hash32).Sum32()
+}
+
+// Sum64 returns the 64-bit checksum of the hash. It panics if hr.Hash doesn't
+// implement the interface hash.Hash64.
+func (hr *hashReader) Sum64() uint64 {
+	return hr.Hash.(hash.Hash64).Sum64()
+}
