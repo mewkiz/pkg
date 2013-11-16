@@ -1,5 +1,4 @@
-// Package hashutil provides interfaces for hash functions and implements a
-// hashing io.Reader.
+// Package hashutil provides interfaces for hash functions.
 package hashutil
 
 import (
