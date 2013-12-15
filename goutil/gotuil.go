@@ -24,8 +24,11 @@ func SrcDir(dir string) (absDir string, err error) {
 }
 
 // AbsImpPath tries to locate the absolute import path based on the provided
-// relative import path.
+// import path.
 func AbsImpPath(relImpPath string) (absImpPath string, err error) {
+	if !build.IsLocalImport(relImpPath) {
+		return relImpPath, nil
+	}
 	absPath, err := filepath.Abs(relImpPath)
 	if err != nil {
 		return "", fmt.Errorf("goutil.AbsImpPath: %v", err)
