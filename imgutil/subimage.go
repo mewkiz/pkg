@@ -3,6 +3,7 @@ package imgutil
 import (
 	"image"
 	"image/draw"
+	"log"
 )
 
 // SubImager is an interface that extends the basic image.Image interface with
@@ -17,6 +18,8 @@ type SubImager interface {
 func SubFallback(img image.Image) SubImager {
 	sub, ok := img.(SubImager)
 	if !ok {
+		// The SubImage fallback method will have a severe impact on performance.
+		log.Println("imgutil.SubFallback: no SubImage method defined; using fallback.")
 		return &subFallback{Image: img}
 	}
 	return sub
