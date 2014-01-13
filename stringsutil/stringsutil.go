@@ -2,6 +2,8 @@
 package stringsutil
 
 import (
+	"bytes"
+	"go/doc"
 	"strings"
 	"unicode"
 )
