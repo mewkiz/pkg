@@ -39,3 +39,10 @@ func SplitCamelCase(s string) (words []string) {
 	}
 	return words
 }
+
+// WordWrap wraps paragraphs of text to width.
+func WordWrap(s string, width int) string {
+	buf := new(bytes.Buffer)
+	doc.ToText(buf, s, "", "", width)
+	return buf.String()
+}
