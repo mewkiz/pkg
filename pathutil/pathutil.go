@@ -7,9 +7,15 @@ import (
 	"strings"
 )
 
-// TrimExt returns a slice of the string filePath without the extension.
+// TrimExt returns filePath without its extension.
 func TrimExt(filePath string) string {
 	ext := path.Ext(filePath)
+	return filePath[:len(filePath)-len(ext)]
+}
+
+// FileName returns the base name of filePath without its extension.
+func FileName(filePath string) string {
+	ext := path.Ext(path.Base(filePath))
 	return filePath[:len(filePath)-len(ext)]
 }
 
