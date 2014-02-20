@@ -2,6 +2,8 @@
 package stringsutil
 
 import (
+	"bytes"
+	"go/doc"
 	"strings"
 	"unicode"
 )
@@ -38,4 +40,11 @@ func SplitCamelCase(s string) (words []string) {
 		words = append(words, s[fieldStart:])
 	}
 	return words
+}
+
+// WordWrap wraps paragraphs of text to width.
+func WordWrap(s string, width int) string {
+	buf := new(bytes.Buffer)
+	doc.ToText(buf, s, "", "", width)
+	return buf.String()
 }
