@@ -14,8 +14,8 @@ import (
 func SrcDir(dir string) (absDir string, err error) {
 	for _, srcDir := range build.Default.SrcDirs() {
 		absDir = filepath.Join(srcDir, dir)
-		_, err := os.Stat(absDir)
-		if err == nil {
+		finfo, err := os.Stat(absDir)
+		if err == nil && finfo.IsDir() {
 			return absDir, nil
 		}
 	}
