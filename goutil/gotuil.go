@@ -10,8 +10,7 @@ import (
 )
 
 // SrcDir tries to locate dir in GOPATH/src/ or GOROOT/src/pkg/ and returns its
-// full path and true if successful. GOPATH may contain a list of multiple
-// paths.
+// full path. GOPATH may contain a list of paths.
 func SrcDir(dir string) (absDir string, err error) {
 	for _, srcDir := range build.Default.SrcDirs() {
 		absDir = filepath.Join(srcDir, dir)
