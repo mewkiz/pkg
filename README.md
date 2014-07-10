@@ -9,26 +9,28 @@ Documentation
 
 Documentation provided by GoDoc.
 
-- [bufioutil][]
-- [bytesutil][]
-- [dbg][]
-- [errorsutil][]
-- [errutil][]
-- [geometry][]
-- [goutil][]
-- [hashutil][]
-	- [crc8][]
-	- [crc16][]
-- [htmlutil][]
-- [httputil][]
-- [imgutil][]
-- [osutil][]
-- [pathutil][]
-- [proxy][]
-- [readerutil][]
-- [stringsutil][]
-- [term][]
+- [bitutil][]: implements common binary encoding and decoding algorithms.
+- [bufioutil][]: implements utility functions for buffered I/O.
+- [bytesutil][]: implements some bytes utility functions.
+- [dbg][]: implements formatted I/O which can be enabled or disabled at runtime.
+- [errorsutil][]: implements some errors utility functions.
+- [errutil][]: implements some error utility functions.
+- [geometry][]: implements basic geometric types and operations.
+- [goutil][]: implements some golang relevant utility functions.
+- [hashutil][]: provides interfaces for hash functions.
+	- [crc8][]: implements the 8-bit cyclic redundancy check, or CRC-8, checksum.
+	- [crc16][]: implements the 16-bit cyclic redundancy check, or CRC-16, checksum.
+- [htmlutil][]: implements some html utility functions.
+- [httputil][]: implements some http utility functions.
+- [imgutil][]: implements some image utility functions.
+- [osutil][]: implements some os utility functions.
+- [pathutil][]: implements path utility functions.
+- [proxy][]: provides proxy server utility functions.
+- [readerutil][]: implements io.Reader utility functions.
+- [stringsutil][]: implements some strings utility functions.
+- [term][]: implements some terminal utility functions.
 
+[bitutil]: http://godoc.org/github.com/mewkiz/pkg/bitutil
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [dbg]: http://godoc.org/github.com/mewkiz/pkg/dbg
