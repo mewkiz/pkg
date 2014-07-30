@@ -70,26 +70,5 @@ func Equal(img1, img2 image.Image) bool {
 func ColorEq(c1, c2 color.Color) bool {
 	r1, g1, b1, a1 := c1.RGBA()
 	r2, g2, b2, a2 := c2.RGBA()
-
-	// Compare red.
-	if r1 != r2 {
-		return false
-	}
-
-	// Compare green.
-	if g1 != g2 {
-		return false
-	}
-
-	// Compare blue.
-	if b1 != b2 {
-		return false
-	}
-
-	// Compare alpha.
-	if a1 != a2 {
-		return false
-	}
-
-	return true
+	return r1 == r2 && g1 == g2 && b1 == b2 && a1 == a2
 }
