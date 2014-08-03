@@ -39,6 +39,8 @@ func TestRead(t *testing.T) {
 		{[]byte{0xAA}, []uint{7, 1}, []uint64{0x55, 0x0}},
 		{[]byte{0xAA}, []uint{8}, []uint64{0xAA}},
 
+		{[]byte{0xAA}, []uint{0}, []uint64{0}},
+
 		// 01 1011011 011011 0
 		{[]byte{0x6D, 0xB6}, []uint{2, 7, 6, 1}, []uint64{0x1, 0x5B, 0x1B, 0x0}},
 

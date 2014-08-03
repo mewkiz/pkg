@@ -27,6 +27,9 @@ func NewReader(r io.Reader) (br *Reader) {
 // Read reads and returns the next n bits, at most 64. It buffers bits up to the
 // next byte boundary.
 func (br *Reader) Read(n uint) (x uint64, err error) {
+	if n == 0 {
+		return 0, nil
+	}
 	if n > 64 {
 		return 0, fmt.Errorf("bit.Reader.Read: invalid number of bits; n (%d) exceeds 64", n)
 	}
