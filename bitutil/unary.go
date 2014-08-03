@@ -5,7 +5,8 @@ import (
 	"github.com/mewkiz/pkg/bit"
 )
 
-// DecodeUnary decodes an unary coded integer and returns it.
+// DecodeUnary decodes and returns an unary coded integer, whose value is
+// represented by the number of leading zeros before a one.
 //
 // Examples of unary coded binary on the left and decoded decimal on the right:
 //
