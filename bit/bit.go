@@ -33,20 +33,24 @@ func (br *Reader) Read(n uint) (x uint64, err error) {
 
 	// Read buffered bits.
 	if br.n > 0 {
-		mask := ^uint8(0) >> (8 - br.n)
-		if br.n >= n {
-			shift := br.n - n
-			x |= uint64(br.x&mask) >> shift
+		switch {
+		case br.n == n:
+			br.n = 0
+			return uint64(br.x), nil
+		case br.n > n:
 			br.n -= n
+			mask := ^uint8(0) << br.n
+			x = uint64(br.x&mask) >> br.n
+			br.x &^= mask
 			return x, nil
 		}
 		n -= br.n
-		x |= uint64(br.x & mask)
+		x = uint64(br.x)
 		br.n = 0
 	}
 
 	// Fill the temporary buffer.
-	bytes := int(n / 8)
+	bytes := n / 8
 	bits := n % 8
 	if bits > 0 {
 		bytes++
@@ -57,18 +61,20 @@ func (br *Reader) Read(n uint) (x uint64, err error) {
 	}
 
 	// Read bits from the temporary buffer.
-	for i, b := range br.buf[:bytes] {
-		if i == bytes-1 && bits > 0 {
-			x <<= bits
-			br.n = 8 - bits
-			mask := ^uint8(0) << br.n
-			x |= uint64(b&mask) >> br.n
-			extraMask := ^uint8(0) >> bits
-			br.x = b & extraMask
-		} else {
-			x <<= 8
-			x |= uint64(b)
-		}
+	for _, b := range br.buf[:bytes-1] {
+		x <<= 8
+		x |= uint64(b)
+	}
+	b := br.buf[bytes-1]
+	if bits > 0 {
+		x <<= bits
+		br.n = 8 - bits
+		mask := ^uint8(0) << br.n
+		x |= uint64(b&mask) >> br.n
+		br.x = b & ^mask
+	} else {
+		x <<= 8
+		x |= uint64(b)
 	}
 
 	return x, nil
