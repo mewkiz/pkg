@@ -2,7 +2,7 @@
 package bitutil
 
 import (
-	"github.com/eaburns/bit"
+	"github.com/mewkiz/pkg/bit"
 )
 
 // DecodeUnary decodes an unary coded integer and returns it.
