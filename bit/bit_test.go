@@ -19,6 +19,7 @@ func TestRead(t *testing.T) {
 		ns   []uint
 		vals []uint64
 	}{
+		// 11111111
 		{[]byte{0xFF}, []uint{1, 1, 1, 1, 1, 1, 1, 1}, []uint64{1, 1, 1, 1, 1, 1, 1, 1}},
 		{[]byte{0xFF}, []uint{2, 2, 2, 2}, []uint64{0x3, 0x3, 0x3, 0x3}},
 		{[]byte{0xFF}, []uint{3, 3, 2}, []uint64{0x7, 0x7, 0x3}},
@@ -28,6 +29,7 @@ func TestRead(t *testing.T) {
 		{[]byte{0xFF}, []uint{7, 1}, []uint64{0x7F, 0x1}},
 		{[]byte{0xFF}, []uint{8}, []uint64{0xFF}},
 
+		// 10101010
 		{[]byte{0xAA}, []uint{1, 1, 1, 1, 1, 1, 1, 1}, []uint64{1, 0, 1, 0, 1, 0, 1, 0}},
 		{[]byte{0xAA}, []uint{2, 2, 2, 2}, []uint64{0x2, 0x2, 0x2, 0x2}},
 		{[]byte{0xAA}, []uint{3, 3, 2}, []uint64{0x5, 0x2, 0x2}},
@@ -36,6 +38,9 @@ func TestRead(t *testing.T) {
 		{[]byte{0xAA}, []uint{6, 2}, []uint64{0x2A, 0x2}},
 		{[]byte{0xAA}, []uint{7, 1}, []uint64{0x55, 0x0}},
 		{[]byte{0xAA}, []uint{8}, []uint64{0xAA}},
+
+		// 01 1011011 011011 0
+		{[]byte{0x6D, 0xB6}, []uint{2, 7, 6, 1}, []uint64{0x1, 0x5B, 0x1B, 0x0}},
 
 		{
 			[]byte{0xAA, 0x55},
@@ -74,18 +79,18 @@ func TestRead(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		r := NewReader(bytes.NewReader(test.data))
 		if len(test.ns) != len(test.vals) {
 			panic("Number of reads does not match number of results")
 		}
-		for i, n := range test.ns {
+		for j, n := range test.ns {
 			m, err := r.Read(n)
 			if err != nil {
 				panic("Unexpected error: " + err.Error())
 			}
-			if m != test.vals[i] {
-				t.Errorf("%v with reads %v: read %d gave %x, expected %x", test.data, test.ns, i, m, test.vals[i])
+			if m != test.vals[j] {
+				t.Errorf("i=%d; %v with reads %v: read %d gave %x, expected %x", i, test.data, test.ns, j, m, test.vals[j])
 			}
 		}
 	}
@@ -105,10 +110,10 @@ func TestReadEOF(t *testing.T) {
 		{[]byte{0xFF, 0xFF}, 17, io.ErrUnexpectedEOF},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		r := NewReader(bytes.NewReader(test.data))
 		if _, err := r.Read(test.n); err != test.err {
-			t.Errorf("Reading %d from %v, expected err=%s, got err=%s", test.n, test.data, test.err, err)
+			t.Errorf("i=%d; Reading %d from %v, expected err=%s, got err=%s", i, test.n, test.data, test.err, err)
 		}
 	}
 
@@ -175,7 +180,7 @@ func TestReadFields(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		r := NewReader(bytes.NewReader(test.data))
 		if len(test.ns) != len(test.fs) {
 			panic("Number of reads does not match number of results")
@@ -184,9 +189,9 @@ func TestReadFields(t *testing.T) {
 		if err != nil {
 			panic("Unexpected error")
 		}
-		for i := range fs {
-			if fs[i] != test.fs[i] {
-				t.Errorf("Reading Fields %v from %v, expected %v, got %v", test.ns, test.data, test.ns, fs)
+		for j := range fs {
+			if fs[j] != test.fs[j] {
+				t.Errorf("i=%d, j=%d: Reading Fields %v from %v, expected %v, got %v", i, j, test.ns, test.data, test.ns, fs)
 			}
 		}
 	}
@@ -209,10 +214,10 @@ func TestReadFieldsEOF(t *testing.T) {
 		{[]byte{}, []uint{1, 8}, io.EOF},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		r := NewReader(bytes.NewReader(test.data))
 		if _, err := r.ReadFields(test.ns...); err != test.err {
-			t.Errorf("Reading Fields %v from %v, expected err=%s, got err=%s", test.ns, test.data, test.err, err)
+			t.Errorf("i=%d; Reading Fields %v from %v, expected err=%s, got err=%s", i, test.ns, test.data, test.err, err)
 		}
 	}
 
