@@ -14,6 +14,6 @@ package bitutil
 //     3 => 6
 //
 // ref: https://developers.google.com/protocol-buffers/docs/encoding
-func DecodeZigZag(x int) int {
+func DecodeZigZag(x int32) int32 {
 	return x>>1 ^ -(x & 1)
 }
