@@ -4,13 +4,33 @@ pkg
 This project provides packages for various utility functions and commonly used
 features.
 
+Mature packages
+---------------
+
+Packages which reach a certain level of maturity are moved to dedicated
+repositories under the [mewpkg][] organization. This enables API stability
+through the use of [Semantic Versioning][].
+
+[mewpkg]: https://github.com/mewpkg/
+[Semantic Versioning]: http://semver.org/
+
+The following packages have been moved:
+
+- [bits][]: provides bit reading operations and binary decoding algorithms.
+- [hashutil][]: provides utility interfaces for hash functions.
+	- [crc8][hashutil/crc8]: implements the 8-bit cyclic redundancy check, or CRC-8, checksum.
+	- [crc16][hashutil/crc16]: implements the 16-bit cyclic redundancy check, or CRC-16, checksum.
+
+[bits]: http://godoc.org/github.com/mewpkg/bits
+[hashutil]: http://godoc.org/github.com/mewpkg/hashutil
+[hashutil/crc8]: http://godoc.org/github.com/mewpkg/hashutil/crc8
+[hashutil/crc16]: http://godoc.org/github.com/mewpkg/hashutil/crc16
+
 Documentation
 -------------
 
 Documentation provided by GoDoc.
 
-- [bit][]: provides bit reading operations for io.Readers.
-- [bits][]: implements common binary encoding and decoding algorithms.
 - [bufioutil][]: implements utility functions for buffered I/O.
 - [bytesutil][]: implements some bytes utility functions.
 - [dbg][]: implements formatted I/O which can be enabled or disabled at runtime.
@@ -18,9 +38,6 @@ Documentation provided by GoDoc.
 - [errutil][]: implements some error utility functions.
 - [geometry][]: implements basic geometric types and operations.
 - [goutil][]: implements some golang relevant utility functions.
-- [hashutil][]: provides interfaces for hash functions.
-	- [crc8][hashutil/crc8]: implements the 8-bit cyclic redundancy check, or CRC-8, checksum.
-	- [crc16][hashutil/crc16]: implements the 16-bit cyclic redundancy check, or CRC-16, checksum.
 - [htmlutil][]: implements some html utility functions.
 - [httputil][]: implements some http utility functions.
 - [imgutil][]: implements some image utility functions.
@@ -31,8 +48,6 @@ Documentation provided by GoDoc.
 - [stringsutil][]: implements some strings utility functions.
 - [term][]: implements colored output and size measurements for terminals.
 
-[bit]: http://godoc.org/github.com/mewkiz/pkg/bit
-[bits]: http://godoc.org/github.com/mewkiz/pkg/bits
 [bufioutil]: http://godoc.org/github.com/mewkiz/pkg/bufioutil
 [bytesutil]: http://godoc.org/github.com/mewkiz/pkg/bytesutil
 [dbg]: http://godoc.org/github.com/mewkiz/pkg/dbg
@@ -40,9 +55,6 @@ Documentation provided by GoDoc.
 [errutil]: http://godoc.org/github.com/mewkiz/pkg/errutil
 [geometry]: http://godoc.org/github.com/mewkiz/pkg/geometry
 [goutil]: http://godoc.org/github.com/mewkiz/pkg/goutil
-[hashutil]: http://godoc.org/github.com/mewkiz/pkg/hashutil
-[hashutil/crc8]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc8
-[hashutil/crc16]: http://godoc.org/github.com/mewkiz/pkg/hashutil/crc16
 [htmlutil]: http://godoc.org/github.com/mewkiz/pkg/htmlutil
 [httputil]: http://godoc.org/github.com/mewkiz/pkg/httputil
 [imgutil]: http://godoc.org/github.com/mewkiz/pkg/imgutil
