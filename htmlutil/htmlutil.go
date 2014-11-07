@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"code.google.com/p/go.net/html"
+	"golang.org/x/net/html"
 )
 
 // ParseFile parses the provided HTML file and returns an HTML node.
