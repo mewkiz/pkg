@@ -5,7 +5,7 @@ notifications:
 
 env:
   global:
-    - secure: "kYYifgMGMG9Zn+C3vVAXUdgTF+fueUZcXOsf+CSnhp8ESEUfNG0hknoxX0iVb+T1D+hiG9fU1FlwOvcOM0x7bAHufG/ENcesuNCYj739opW/pfkKwg2e9qw3XAMLXpx68Z3wSNcsRrKctBr11AXIiIssw0SaV1eKwAkEljtJ+xM="
+    - secure: "GBa/lPUd95TqmwtBzZDyNd4JJ5kZ2+Nwx/wlukRo3gH939xy3Sn+I8S/0AqiJ4IWe1iSNeBl3a1XbfKZ4dbhP/IkuinIY7emaOnvJbfODxyTFpG5yzY0Jg/3CpUs3oTqY07n9sg7QqOffKrswiuxmukevpsJuMVXN5T8zjzQAQg="
     - PATH=$HOME/gopath/bin:$PATH
 
 # TODO(u): Update import path of vet and cover when Travis starts using Go 1.4.
