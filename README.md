@@ -1,6 +1,10 @@
 pkg
 ===
 
+[![Build Status](https://travis-ci.org/mewkiz/pkg.svg?branch=master)](https://travis-ci.org/mewkiz/pkg)
+[![Coverage Status](https://img.shields.io/coveralls/mewkiz/pkg.svg)](https://coveralls.io/r/mewkiz/pkg?branch=master)
+[![GoDoc](https://godoc.org/github.com/mewkiz/pkg?status.svg)](https://godoc.org/github.com/mewkiz/pkg)
+
 This project provides packages for various utility functions and commonly used
 features.
 
