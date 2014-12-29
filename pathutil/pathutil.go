@@ -15,8 +15,9 @@ func TrimExt(filePath string) string {
 
 // FileName returns the base name of filePath without its extension.
 func FileName(filePath string) string {
-	ext := path.Ext(path.Base(filePath))
-	return filePath[:len(filePath)-len(ext)]
+	name := path.Base(filePath)
+	ext := path.Ext(name)
+	return name[:len(name)-len(ext)]
 }
 
 // Base corresponds to a base directory.
