@@ -119,7 +119,10 @@ func backendErr(e error) (err error) {
 // The error format is as follows:
 //    pkg.func (file:line): error: text
 func (e *errInfo) Error() string {
-	text := e.err.Error()
+	text := "<nil>"
+	if e.err != nil {
+		text = e.err.Error()
+	}
 
 	if UseColor {
 		// Use colors.
