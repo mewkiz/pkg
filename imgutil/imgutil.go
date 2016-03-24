@@ -41,16 +41,17 @@ func WriteFile(imgPath string, img image.Image) (err error) {
 	return nil
 }
 
-// writeJPEG writes the image data to a JPEG file specified by imgPath.
+// WriteJPEG writes the image data to a JPEG file specified by imgPath.
 // writeJPEG creates the named file using mode 0666 (before umask), truncating
-// it if it already exists.
-func writeJPEG(imgPath string, img image.Image) (err error) {
+// it if it already exists. The quality of the output image is within the range
+// [1, 100]; higher is better.
+func WriteJPEG(imgPath string, img image.Image, quality int) (err error) {
 	fw, err := os.Create(imgPath)
 	if err != nil {
 		return err
 	}
 	defer fw.Close()
-	err = jpeg.Encode(fw, img)
+	err = jpeg.Encode(fw, img, &jpeg.Options{Quality: quality})
 	if err != nil {
 		return err
 	}
