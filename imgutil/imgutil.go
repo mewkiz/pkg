@@ -4,8 +4,8 @@ package imgutil
 import (
 	"image"
 	"image/color"
-	_ "image/gif"  // support for decoding gif images.
-	_ "image/jpeg" // support for decoding jpeg images.
+	_ "image/gif" // support for decoding gif images.
+	"image/jpeg"
 	"image/png"
 	"os"
 )
@@ -35,6 +35,22 @@ func WriteFile(imgPath string, img image.Image) (err error) {
 	}
 	defer fw.Close()
 	err = png.Encode(fw, img)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// writeJPEG writes the image data to a JPEG file specified by imgPath.
+// writeJPEG creates the named file using mode 0666 (before umask), truncating
+// it if it already exists.
+func writeJPEG(imgPath string, img image.Image) (err error) {
+	fw, err := os.Create(imgPath)
+	if err != nil {
+		return err
+	}
+	defer fw.Close()
+	err = jpeg.Encode(fw, img)
 	if err != nil {
 		return err
 	}
