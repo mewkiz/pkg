@@ -1,9 +1,7 @@
 // Package osutil implements some os utility functions.
 package osutil
 
-import (
-	"os"
-)
+import "os"
 
 // Exists reports whether the given file or directory exists or not.
 func Exists(path string) (bool, error) {

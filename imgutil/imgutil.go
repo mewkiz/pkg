@@ -8,6 +8,8 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
+
+	"golang.org/x/image/bmp"
 )
 
 // ReadFile reads an image file (gif, jpeg or png) specified by imgPath and
@@ -34,8 +36,7 @@ func WriteFile(imgPath string, img image.Image) (err error) {
 		return err
 	}
 	defer fw.Close()
-	err = png.Encode(fw, img)
-	if err != nil {
+	if err := png.Encode(fw, img); err != nil {
 		return err
 	}
 	return nil
@@ -51,8 +52,23 @@ func WriteJPEG(imgPath string, img image.Image, quality int) (err error) {
 		return err
 	}
 	defer fw.Close()
-	err = jpeg.Encode(fw, img, &jpeg.Options{Quality: quality})
+	options := &jpeg.Options{Quality: quality}
+	if err := jpeg.Encode(fw, img, options); err != nil {
+		return err
+	}
+	return nil
+}
+
+// WriteBMP writes the image data to a BMP file specified by imgPath.
+// WriteBMP creates the named file using mode 0666 (before umask), truncating
+// it if it already exists
+func WriteBMP(imgPath string, img image.Image) (err error) {
+	fw, err := os.Create(imgPath)
 	if err != nil {
+		return err
+	}
+	defer fw.Close()
+	if err := bmp.Encode(fw, img); err != nil {
 		return err
 	}
 	return nil
