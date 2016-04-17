@@ -1,28 +1,10 @@
 # pkg
 
 [![Build Status](https://travis-ci.org/mewkiz/pkg.svg?branch=master)](https://travis-ci.org/mewkiz/pkg)
-[![Coverage Status](https://img.shields.io/coveralls/mewkiz/pkg.svg)](https://coveralls.io/r/mewkiz/pkg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/mewkiz/pkg/badge.svg?branch=master)](https://coveralls.io/github/mewkiz/pkg?branch=master)
 [![GoDoc](https://godoc.org/github.com/mewkiz/pkg?status.svg)](https://godoc.org/github.com/mewkiz/pkg)
 
 The pkg project provides packages for various utility functions and commonly used features.
-
-## Mature packages
-
-Packages which reach a certain level of maturity are moved to dedicated repositories under the [mewpkg] organization. This enables API stability through the use of [Semantic Versioning](http://semver.org/).
-
-[mewpkg]: https://github.com/mewpkg/
-
-The following packages have been moved:
-
-- [bits]: provides bit reading operations and binary decoding algorithms.
-- [hashutil]: provides utility interfaces for hash functions.
-	- [crc8][hashutil/crc8]: implements the 8-bit cyclic redundancy check, or CRC-8, checksum.
-	- [crc16][hashutil/crc16]: implements the 16-bit cyclic redundancy check, or CRC-16, checksum.
-
-[bits]: http://godoc.org/github.com/mewpkg/bits
-[hashutil]: http://godoc.org/github.com/mewpkg/hashutil
-[hashutil/crc8]: http://godoc.org/github.com/mewpkg/hashutil/crc8
-[hashutil/crc16]: http://godoc.org/github.com/mewpkg/hashutil/crc16
 
 ## Documentation
 
@@ -38,6 +20,7 @@ Documentation provided by GoDoc.
 - [htmlutil]: implements some html utility functions.
 - [httputil]: implements some http utility functions.
 - [imgutil]: implements some image utility functions.
+- [ioutilx]: implements extended input/output utility functions.
 - [osutil]: implements some os utility functions.
 - [pathutil]: implements path utility functions.
 - [proxy]: provides proxy server utility functions.
@@ -55,6 +38,7 @@ Documentation provided by GoDoc.
 [htmlutil]: http://godoc.org/github.com/mewkiz/pkg/htmlutil
 [httputil]: http://godoc.org/github.com/mewkiz/pkg/httputil
 [imgutil]: http://godoc.org/github.com/mewkiz/pkg/imgutil
+[ioutilx]: http://godoc.org/github.com/mewkiz/pkg/ioutilx
 [osutil]: http://godoc.org/github.com/mewkiz/pkg/osutil
 [pathutil]: http://godoc.org/github.com/mewkiz/pkg/pathutil
 [proxy]: http://godoc.org/github.com/mewkiz/pkg/proxy
