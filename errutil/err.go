@@ -13,10 +13,10 @@ import (
 // UseColor indicates if error messages should use colors.
 var UseColor = true
 
-// errInfo is en error containing position information.
-type errInfo struct {
+// ErrInfo is en error containing position information.
+type ErrInfo struct {
 	// err is the original error message.
-	err error
+	Err error
 	// pos refers to the position of the original error message. A nil value
 	// indicates that no position information should be displayed with the error
 	// message.
@@ -69,18 +69,18 @@ func Newf(format string, a ...interface{}) (err error) {
 // NewNoPos returns an error which explicitly contains no position information.
 // Further calls to Err will not embed any position information.
 func NewNoPos(text string) (err error) {
-	return &errInfo{err: errors.New(text)}
+	return &ErrInfo{Err: errors.New(text)}
 }
 
 // NewNoPosf returns a formatted error which explicitly contains no position information.
 // Further calls to Err will not embed any position information.
 func NewNoPosf(format string, a ...interface{}) (err error) {
-	return &errInfo{err: fmt.Errorf(format, a...)}
+	return &ErrInfo{Err: fmt.Errorf(format, a...)}
 }
 
 // ErrNoPos return an error which explicitly contains no position information.
 func ErrNoPos(e error) (err error) {
-	return &errInfo{err: e}
+	return &ErrInfo{Err: e}
 }
 
 // Err returns an error which contains position information from the callee. The
@@ -90,7 +90,7 @@ func Err(e error) (err error) {
 }
 
 func backendErr(e error) (err error) {
-	_, ok := e.(*errInfo)
+	_, ok := e.(*ErrInfo)
 	if ok {
 		return e
 	}
@@ -103,8 +103,8 @@ func backendErr(e error) (err error) {
 	if f != nil {
 		callee = f.Name()
 	}
-	err = &errInfo{
-		err: e,
+	err = &ErrInfo{
+		Err: e,
 		pos: &position{
 			file:   path.Base(file),
 			line:   line,
@@ -118,10 +118,10 @@ func backendErr(e error) (err error) {
 //
 // The error format is as follows:
 //    pkg.func (file:line): error: text
-func (e *errInfo) Error() string {
+func (e *ErrInfo) Error() string {
 	text := "<nil>"
-	if e.err != nil {
-		text = e.err.Error()
+	if e.Err != nil {
+		text = e.Err.Error()
 	}
 
 	if UseColor {
