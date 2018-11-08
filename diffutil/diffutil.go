@@ -11,12 +11,16 @@ import (
 )
 
 // Diff displays the difference between a and b using Git.
-func Diff(a, b string, words bool) error {
+func Diff(a, b string, words bool, filename string) error {
 	dir, err := ioutil.TempDir("/tmp", "diff_")
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	path := filepath.Join(dir, "foo")
+	filename = filepath.Base(filename)
+	if len(filename) == 0 {
+		filename = "foo"
+	}
+	path := filepath.Join(dir, filename)
 	if err := ioutil.WriteFile(path, []byte(a), 0644); err != nil {
 		return errors.WithStack(err)
 	}
