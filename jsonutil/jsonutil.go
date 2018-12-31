@@ -32,8 +32,11 @@ func ParseFile(path string, v interface{}) error {
 
 // Write marshals v into JSON format, writing to w.
 func Write(w io.Writer, v interface{}) error {
-	enc := json.NewEncoder(w)
-	if err := enc.Encode(v); err != nil {
+	buf, err := json.MarshalIndent(v, "", "\t")
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if _, err := w.Write(buf); err != nil {
 		return errors.WithStack(err)
 	}
 	return nil
