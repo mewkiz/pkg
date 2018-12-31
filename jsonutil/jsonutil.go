@@ -29,3 +29,22 @@ func ParseFile(path string, v interface{}) error {
 	defer f.Close()
 	return Parse(f, v)
 }
+
+// Write marshals v into JSON format, writing to w.
+func Write(w io.Writer, v interface{}) error {
+	enc := json.NewEncoder(w)
+	if err := enc.Encode(v); err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
+// WriteFile marshals v into JSON format, writing to jsonPath.
+func WriteFile(jsonPath string, v interface{}) error {
+	fd, err := os.Create(jsonPath)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	defer fd.Close()
+	return Write(fd, v)
+}
