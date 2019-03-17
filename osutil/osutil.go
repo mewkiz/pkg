@@ -2,7 +2,7 @@
 package osutil
 
 import (
-	"fmt"
+	"log"
 	"os"
 )
 
@@ -15,5 +15,6 @@ func Exists(path string) bool {
 	if os.IsNotExist(err) {
 		return false
 	}
-	panic(fmt.Errorf("unable to stat path %q; %v", path, err))
+	log.Printf("unable to stat path %q; %v", path, err)
+	return false
 }
