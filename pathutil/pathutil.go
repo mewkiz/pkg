@@ -3,20 +3,20 @@ package pathutil
 
 import (
 	"fmt"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
 // TrimExt returns filePath without its extension.
 func TrimExt(filePath string) string {
-	ext := path.Ext(filePath)
+	ext := filepath.Ext(filePath)
 	return filePath[:len(filePath)-len(ext)]
 }
 
 // FileName returns the base name of filePath without its extension.
 func FileName(filePath string) string {
-	name := path.Base(filePath)
-	ext := path.Ext(name)
+	name := filepath.Base(filePath)
+	ext := filepath.Ext(name)
 	return name[:len(name)-len(ext)]
 }
 
@@ -28,7 +28,7 @@ type Base string
 // vulnerabilities.
 func (base Base) Path(relPath string) (string, error) {
 	// Join joins the path elements and cleans the result p.
-	p := path.Join(string(base), relPath)
+	p := filepath.Join(string(base), relPath)
 	// If relPath contains directory traversal characters such as "../" p
 	// could have escaped base by now.
 	if !strings.HasPrefix(p, string(base)) {
