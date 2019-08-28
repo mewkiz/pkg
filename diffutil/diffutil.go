@@ -69,19 +69,17 @@ func PrettyDiff(a, b interface{}) (string, bool) {
 		s    string
 	}
 	var ts []T
-	plus := term.Green("+")
 	for path, added := range diff.Added {
-		s := plus + fmt.Sprintf(" %s = %#v\n", path, added)
+		s := term.Green(fmt.Sprintf("+ %s = %#v\n", path, added))
 		ts = append(ts, T{path: path.String(), s: s})
 	}
-	minus := term.Red("-")
 	for path, removed := range diff.Removed {
-		s := minus + fmt.Sprintf(" %s = %#v\n", path, removed)
+		s := term.Red(fmt.Sprintf("- %s = %#v\n", path, removed))
 		ts = append(ts, T{path: path.String(), s: s})
 	}
 	for path, modified := range diff.Modified {
-		old := minus + fmt.Sprintf(" %s = %#v\n", path, modified.Old)
-		new := plus + fmt.Sprintf(" %s = %#v\n", path, modified.New)
+		old := term.Red(fmt.Sprintf("- %s = %#v\n", path, modified.Old))
+		new := term.Green(fmt.Sprintf("+ %s = %#v\n", path, modified.New))
 		s := old + new
 		ts = append(ts, T{path: path.String(), s: s})
 	}
