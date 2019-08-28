@@ -2,11 +2,17 @@
 package diffutil
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
+	"strings"
 
+	"github.com/d4l3k/messagediff"
+	"github.com/mewkiz/pkg/natsort"
+	"github.com/mewkiz/pkg/term"
 	"github.com/pkg/errors"
 )
 
@@ -52,4 +58,39 @@ func Diff(a, b string, words bool, filename string) error {
 		return errors.WithStack(err)
 	}
 	return nil
+}
+
+// PrettyDiff returns a pretty-printed colour output of the deep diff of a and
+// b. The boolean return value indicates whether a and b are equal.
+func PrettyDiff(a, b interface{}) (string, bool) {
+	diff, equal := messagediff.DeepDiff(a, b)
+	type T struct {
+		path string
+		s    string
+	}
+	var ts []T
+	plus := term.Green("+")
+	for path, added := range diff.Added {
+		s := plus + fmt.Sprintf(" %s = %#v\n", path, added)
+		ts = append(ts, T{path: path.String(), s: s})
+	}
+	minus := term.Red("-")
+	for path, removed := range diff.Removed {
+		s := minus + fmt.Sprintf(" %s = %#v\n", path, removed)
+		ts = append(ts, T{path: path.String(), s: s})
+	}
+	for path, modified := range diff.Modified {
+		old := minus + fmt.Sprintf(" %s = %#v\n", path, modified.Old)
+		new := plus + fmt.Sprintf(" %s = %#v\n", path, modified.New)
+		s := old + new
+		ts = append(ts, T{path: path.String(), s: s})
+	}
+	sort.Slice(ts, func(i, j int) bool {
+		return natsort.Less(ts[i].path, ts[j].path)
+	})
+	var ss []string
+	for _, t := range ts {
+		ss = append(ss, t.s)
+	}
+	return strings.Join(ss, ""), equal
 }
