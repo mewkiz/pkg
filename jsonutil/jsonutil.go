@@ -21,13 +21,16 @@ func Parse(r io.Reader, v interface{}) error {
 }
 
 // ParseFile parses the given JSON file into v.
-func ParseFile(path string, v interface{}) error {
-	f, err := os.Open(path)
+func ParseFile(jsonPath string, v interface{}) error {
+	f, err := os.Open(jsonPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
 	defer f.Close()
-	return Parse(f, v)
+	if err := Parse(f, v); err != nil {
+		return errors.Wrapf(err, "unable to parse %q", jsonPath)
+	}
+	return nil
 }
 
 // Write marshals v into JSON format, writing to w.
