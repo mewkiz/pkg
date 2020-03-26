@@ -44,9 +44,9 @@ func Diff(a, b string, words bool, filename string) error {
 		return errors.WithStack(err)
 	}
 	if words {
-		cmd = exec.Command("git", "diff", "--color-words")
+		cmd = exec.Command("git", "diff", "--color-words", "--color=always")
 	} else {
-		cmd = exec.Command("git", "diff")
+		cmd = exec.Command("git", "diff", "--color=always")
 	}
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
