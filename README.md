@@ -45,9 +45,3 @@ Documentation provided by GoDoc.
 [readerutil]: http://godoc.org/github.com/mewkiz/pkg/readerutil
 [stringsutil]: http://godoc.org/github.com/mewkiz/pkg/stringsutil
 [term]: http://godoc.org/github.com/mewkiz/pkg/term
-
-## Public domain
-
-The source code and any original content of this repository is hereby released into the [public domain].
-
-[public domain]: https://creativecommons.org/publicdomain/zero/1.0/
