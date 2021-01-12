@@ -10,6 +10,8 @@ import (
 // the SubImage method.
 type SubImager interface {
 	image.Image
+	// SubImage returns an image representing the portion of the image visible
+	// through r. The returned value shares pixels with the original image.
 	SubImage(r image.Rectangle) image.Image
 }
 
