@@ -50,6 +50,7 @@ func Diff(a, b string, words bool, filename string) error {
 	}
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	cmd.Dir = dir
 	if err := cmd.Run(); err != nil {
 		return errors.WithStack(err)
