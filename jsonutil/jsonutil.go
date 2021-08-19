@@ -21,16 +21,20 @@ func Parse(r io.Reader, v interface{}) error {
 }
 
 // ParseFile parses the given JSON file into v.
-func ParseFile(jsonPath string, v interface{}) error {
+func ParseFile(jsonPath string, v interface{}) (err error) {
 	f, err := os.Open(jsonPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	defer f.Close()
+	defer func() {
+		if e := f.Close(); e != nil {
+			err = errors.WithStack(e)
+		}
+	}()
 	if err := Parse(f, v); err != nil {
 		return errors.Wrapf(err, "unable to parse %q", jsonPath)
 	}
-	return nil
+	return err
 }
 
 // Write marshals v into JSON format, writing to w.
@@ -46,11 +50,18 @@ func Write(w io.Writer, v interface{}) error {
 }
 
 // WriteFile marshals v into JSON format, writing to jsonPath.
-func WriteFile(jsonPath string, v interface{}) error {
+func WriteFile(jsonPath string, v interface{}) (err error) {
 	fd, err := os.Create(jsonPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	defer fd.Close()
-	return Write(fd, v)
+	defer func() {
+		if e := fd.Close(); e != nil {
+			err = errors.WithStack(e)
+		}
+	}()
+	if err := Write(fd, v); err != nil {
+		return errors.WithStack(err)
+	}
+	return err
 }
