@@ -3,10 +3,10 @@ package jsonutil
 
 import (
 	"bufio"
+	"encoding/json"
 	"io"
 	"os"
 
-	json "github.com/goccy/go-json"
 	"github.com/pkg/errors"
 )
 
