@@ -3,17 +3,23 @@ package csvutil
 
 import (
 	"bufio"
+	"encoding/csv"
 	"io"
 	"os"
 
-	csv "github.com/gocarina/gocsv"
+	"github.com/jszwec/csvutil"
 	"github.com/pkg/errors"
 )
 
 // Parse parses the given CSV stream into v.
 func Parse(r io.Reader, v interface{}) error {
 	br := bufio.NewReader(r)
-	if err := csv.Unmarshal(br, v); err != nil {
+	rr := csv.NewReader(br)
+	dec, err := csvutil.NewDecoder(rr)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	if err := dec.Decode(v); err != nil {
 		return errors.WithStack(err)
 	}
 	return nil
@@ -38,7 +44,13 @@ func ParseFile(csvPath string, v interface{}) (err error) {
 
 // Write marshals v into CSV format, writing to w.
 func Write(w io.Writer, v interface{}) error {
-	if err := csv.Marshal(v, w); err != nil {
+	ww := csv.NewWriter(w)
+	enc := csvutil.NewEncoder(ww)
+	if err := enc.Encode(v); err != nil {
+		return errors.WithStack(err)
+	}
+	ww.Flush() // flush pending writes.
+	if err := ww.Error(); err != nil {
 		return errors.WithStack(err)
 	}
 	return nil
