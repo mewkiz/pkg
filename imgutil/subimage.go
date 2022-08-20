@@ -2,6 +2,7 @@ package imgutil
 
 import (
 	"image"
+	"image/color"
 	"image/draw"
 	"log"
 )
@@ -39,4 +40,37 @@ func (src *subFallback) SubImage(r image.Rectangle) image.Image {
 	dst := image.NewRGBA(dstRect)
 	draw.Draw(dst, dstRect, src, r.Min, draw.Over)
 	return dst
+}
+
+// subImage represents a subimage of the given source image.
+type subImage struct {
+	// Underlying image.
+	image.Image
+	// Bounds of subimage.
+	bounds image.Rectangle
+}
+
+// NewSubImage returns a subimage of the given source image based on the
+// specified bounds.
+func NewSubImage(src image.Image, bounds image.Rectangle) image.Image {
+	return &subImage{
+		Image:  src,
+		bounds: bounds,
+	}
+}
+
+// Bounds returns the domain for which At can return non-zero color.
+// The bounds do not necessarily contain the point (0, 0).
+func (sub *subImage) Bounds() image.Rectangle {
+	return sub.bounds
+}
+
+// At returns the color of the pixel at (x, y).
+// At(Bounds().Min.X, Bounds().Min.Y) returns the upper-left pixel of the grid.
+// At(Bounds().Max.X-1, Bounds().Max.Y-1) returns the lower-right one.
+func (sub *subImage) At(x, y int) color.Color {
+	if !(image.Pt(x, y).In(sub.bounds)) {
+		return color.Transparent
+	}
+	return sub.Image.At(x, y)
 }
