@@ -7,7 +7,7 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/mewkiz/pkg/term"
+	"github.com/mewpkg/term"
 )
 
 // New returns a new error string using the following format:

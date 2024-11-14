@@ -12,7 +12,7 @@ import (
 
 	"github.com/d4l3k/messagediff"
 	"github.com/mewkiz/pkg/natsort"
-	"github.com/mewkiz/pkg/term"
+	"github.com/mewpkg/term"
 	"github.com/pkg/errors"
 )
 

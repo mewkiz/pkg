@@ -7,7 +7,7 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/mewkiz/pkg/term"
+	"github.com/mewpkg/term"
 )
 
 // UseColor indicates if error messages should use colors.
