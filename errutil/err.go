@@ -117,7 +117,8 @@ func backendErr(e error) (err error) {
 // Error returns an error string with position information.
 //
 // The error format is as follows:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func (e *ErrInfo) Error() string {
 	text := "<nil>"
 	if e.Err != nil {

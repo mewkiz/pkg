@@ -11,13 +11,15 @@ import (
 )
 
 // New returns a new error string using the following format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func New(text string) error {
 	return backendNew(text, 2)
 }
 
 // backendNew returns a new error string using the following format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func backendNew(text string, skip int) error {
 	pc, file, line, ok := runtime.Caller(skip)
 	if !ok {
@@ -31,14 +33,16 @@ func backendNew(text string, skip int) error {
 }
 
 // NewColor returns a new colorful error string using the following format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func NewColor(text string) error {
 	return backendNewColor(text, 2)
 }
 
 // backendNewColor returns a new colorful error string using the following
 // format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func backendNewColor(text string, skip int) error {
 	pc, file, line, ok := runtime.Caller(skip)
 	if !ok {
@@ -55,7 +59,8 @@ func backendNewColor(text string, skip int) error {
 
 // Errorf returns a new error string, based on the provided format string, using
 // the following format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func Errorf(format string, a ...interface{}) error {
 	text := fmt.Sprintf(format, a...)
 	return backendNew(text, 2)
@@ -63,7 +68,8 @@ func Errorf(format string, a ...interface{}) error {
 
 // ErrorfColor returns a new colorful error string, based on the provided format
 // string, using the following format:
-//    pkg.func (file:line): error: text
+//
+//	pkg.func (file:line): error: text
 func ErrorfColor(format string, a ...interface{}) error {
 	text := fmt.Sprintf(format, a...)
 	return backendNewColor(text, 2)
