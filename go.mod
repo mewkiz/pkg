@@ -8,5 +8,5 @@ require (
 	github.com/mewpkg/term v0.0.0-20241026122259-37a80af23985
 	github.com/pkg/errors v0.9.1
 	golang.org/x/image v0.23.0
-	golang.org/x/net v0.33.0
+	golang.org/x/net v0.36.0
 )
