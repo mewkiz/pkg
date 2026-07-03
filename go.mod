@@ -7,6 +7,6 @@ require (
 	github.com/jszwec/csvutil v1.10.0
 	github.com/mewpkg/term v0.0.0-20241026122259-37a80af23985
 	github.com/pkg/errors v0.9.1
-	golang.org/x/image v0.38.0
+	golang.org/x/image v0.41.0
 	golang.org/x/net v0.55.0
 )
