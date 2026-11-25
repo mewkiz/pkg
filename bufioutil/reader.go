@@ -26,6 +26,9 @@ func (br Reader) ReadLine() (line string, err error) {
 	for {
 		buf, isPrefix, err := br.Reader.ReadLine()
 		if err != nil {
+			if err == io.EOF && len(line) > 0 {
+				return line, nil
+			}
 			return "", err
 		}
 		line += string(buf)
